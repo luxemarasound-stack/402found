@@ -1,0 +1,74 @@
+{
+  "name": "Prompt Injection Detector",
+  "version": "1.0.0",
+  "description": "Scans agent input for prompt injection attacks. Detects instruction overrides, jailbreak attempts, role-play manipulations, system prompt leakage attempts, hidden instructions, encoding obfuscation, context manipulation, and privilege escalation. Returns confidence score with block/warn/pass recommendation. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://prompt-injection-detector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "scan_for_injection",
+      "description": "Scans text for prompt injection patterns including instruction overrides, jailbreak attempts, role-play manipulations, system prompt leakage attempts, hidden instructions, encoding obfuscation, context manipulation, and privilege escalation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The agent input text to scan for prompt injection patterns"
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "injectionDetected": {
+            "type": "boolean",
+            "description": "Whether any injection patterns were found"
+          },
+          "confidence": {
+            "type": "number",
+            "description": "Confidence score from 0 (no injection) to 1 (definite injection)"
+          },
+          "patterns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "matched": { "type": "string" },
+                "reason": { "type": "string" }
+              }
+            },
+            "description": "List of injection patterns detected"
+          },
+          "recommendation": {
+            "type": "string",
+            "enum": ["block", "warn", "pass"],
+            "description": "Recommended action based on confidence level"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

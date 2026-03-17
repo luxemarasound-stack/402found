@@ -1,0 +1,31 @@
+{
+  "spec_version": "2026-03",
+  "name": "Agent Audit Trail",
+  "description": "Creates tamper-evident, HMAC-signed audit log entries for agent actions. Returns signed receipts for compliance. Covers OWASP ASI audit requirements. Pay-per-request via x402.",
+  "url": "https://agent-audit-trail.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Create HMAC-signed audit log entries",
+    "Return tamper-evident signed receipts",
+    "Track agent actions with timestamps and payloads",
+    "Stateless — caller stores the signed receipt"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

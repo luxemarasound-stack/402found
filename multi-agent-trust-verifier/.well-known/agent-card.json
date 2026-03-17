@@ -1,0 +1,32 @@
+{
+  "spec_version": "2026-03",
+  "name": "Multi-Agent Trust Verifier",
+  "description": "Verifies trust between agents by checking goal alignment, spend limits, action scope, and detecting goal drift. Covers OWASP ASI01 Agent Goal Hijack — the #1 ranked agentic security risk. Pay-per-request via x402.",
+  "url": "https://multi-agent-trust-verifier.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Verify goal alignment between proposed action and original goal",
+    "Enforce spend limits across agent delegations",
+    "Detect high-risk actions (delete, transfer funds, escalate privileges)",
+    "Detect goal drift and self-delegation",
+    "Return trust score, goal alignment score, and approve/deny/escalate"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.004",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

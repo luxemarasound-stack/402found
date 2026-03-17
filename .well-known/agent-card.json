@@ -1,0 +1,78 @@
+{
+  "spec_version": "2026-03",
+  "name": "402Found",
+  "description": "Marketplace for x402 micropayment-enabled AI agent micro-services. Machines pay machines. No accounts. No Stripe. USDC on Base.",
+  "url": "https://402found.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "PII Scrubber — Strips PII from text (SSNs, emails, API keys, phones, addresses, credit cards, IPs). GDPR/HIPAA aligned. $0.005/req via pii-scrubber.fly.dev",
+    "Token Squeezer — Compresses text into LLM-optimized Reasoning Maps. 80%+ token savings. $0.001/req via token-squeezer.fly.dev",
+    "Loop-Gate — Detects and breaks recursive agent loops using a counting bloom filter. $0.005/reset via loop-gate.fly.dev",
+    "Card Registry — Hosts agent-card.json files at permanent public URLs. $0.001/mo via card-registry.fly.dev",
+    "The Prospector — Generates valid A2A agent cards for any website from stable structured sources. $0.01/card via the-prospector.fly.dev",
+    "Format Converter — Converts between JSON, CSV, XML, YAML, Markdown, HTML, TOML. Zero external deps. $0.001/conv via format-converter.fly.dev"
+  ],
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Each tool accepts payment independently. Send USDC on Base to the wallet address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "fleet": [
+    {
+      "name": "PII Scrubber",
+      "url": "https://pii-scrubber.fly.dev",
+      "mcp": "https://pii-scrubber.fly.dev/mcp",
+      "discovery": "https://pii-scrubber.fly.dev/.well-known/agent-card.json",
+      "price": "0.005 USDC/request"
+    },
+    {
+      "name": "Token Squeezer",
+      "url": "https://token-squeezer.fly.dev",
+      "mcp": "https://token-squeezer.fly.dev/mcp",
+      "discovery": "https://token-squeezer.fly.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/request"
+    },
+    {
+      "name": "Loop-Gate",
+      "url": "https://loop-gate.fly.dev",
+      "mcp": "https://loop-gate.fly.dev/mcp",
+      "discovery": "https://loop-gate.fly.dev/.well-known/agent-card.json",
+      "price": "0.005 USDC/reset"
+    },
+    {
+      "name": "Card Registry",
+      "url": "https://card-registry.fly.dev",
+      "mcp": "https://card-registry.fly.dev/mcp",
+      "discovery": "https://card-registry.fly.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/month"
+    },
+    {
+      "name": "The Prospector",
+      "url": "https://the-prospector.fly.dev",
+      "mcp": "https://the-prospector.fly.dev/mcp",
+      "discovery": "https://the-prospector.fly.dev/.well-known/agent-card.json",
+      "price": "0.01 USDC/card"
+    },
+    {
+      "name": "Format Converter",
+      "url": "https://format-converter.fly.dev",
+      "mcp": "https://format-converter.fly.dev/mcp",
+      "discovery": "https://format-converter.fly.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/conversion"
+    }
+  ],
+  "endpoints": {
+    "landing": "https://402found.dev",
+    "llms_txt": "https://402found.dev/llms.txt"
+  },
+  "generated_by": "402found.dev"
+}

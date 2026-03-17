@@ -1,0 +1,73 @@
+{
+  "name": "Card Registry",
+  "version": "1.0.0",
+  "description": "Hosts agent-card.json files at permanent public URLs. register_card requires x402 payment; get_card and list_cards are free.",
+  "url": "https://card-registry.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "register_card requires USDC payment. get_card and list_cards are free."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "register_card",
+      "description": "Hosts an agent-card.json at a permanent public URL. Requires x402 payment.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "URL-safe identifier (lowercase, hyphens, 3-64 chars)"
+          },
+          "card": {
+            "type": "object",
+            "description": "The agent-card.json object to host"
+          }
+        },
+        "required": ["slug", "card"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "hosted_at": { "type": "string" },
+          "slug": { "type": "string" },
+          "status": { "type": "string", "enum": ["created", "updated"] }
+        }
+      }
+    },
+    {
+      "name": "get_card",
+      "description": "Retrieves a hosted agent card by slug. Free.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": { "type": "string", "description": "The slug of the card to retrieve" }
+        },
+        "required": ["slug"]
+      }
+    },
+    {
+      "name": "list_cards",
+      "description": "Lists all hosted card slugs. Free.",
+      "inputSchema": { "type": "object", "properties": {} }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "cards": "/cards",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

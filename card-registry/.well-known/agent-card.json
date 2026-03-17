@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Card Registry",
+  "description": "Hosts agent-card.json files at permanent public URLs for businesses that can't serve them from their own domain. Discoverable by any A2A agent. Pay-per-card via x402.",
+  "url": "https://card-registry.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Host agent-card.json at permanent public URLs",
+    "Retrieve and list hosted agent cards",
+    "Cards served at /cards/{slug}.json with no payment gate"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

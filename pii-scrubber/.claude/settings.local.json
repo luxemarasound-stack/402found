@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(curl:*)",
+      "Bash(fly auth:*)",
+      "Bash(fly apps:*)",
+      "Bash(fly secrets:*)",
+      "Bash(fly deploy:*)",
+      "Bash(node:*)",
+      "Bash(fly volumes:*)",
+      "Bash(which wrangler:*)",
+      "Bash(cd:*)",
+      "Bash(npx wrangler:*)"
+    ]
+  }
+}

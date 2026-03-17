@@ -1,0 +1,31 @@
+{
+  "spec_version": "2026-03",
+  "name": "The Prospector",
+  "description": "Generates valid agent-card.json files from stable structured sources (llms.txt, robots.txt, sitemap.xml, .well-known files). Never scrapes HTML. Pay-per-card via x402.",
+  "url": "https://the-prospector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Generate agent-card.json from any URL",
+    "Read from llms.txt, robots.txt, sitemap.xml, .well-known files",
+    "2026 A2A spec compliant output",
+    "Hosting upsell to Card Registry"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.01",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

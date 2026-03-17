@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Token Squeezer",
+  "description": "Compresses large text, code, or conversation history into hyper-dense Reasoning Maps optimized for LLM context windows. Saves 80%+ on token costs. Pay-per-request via x402.",
+  "url": "https://token-squeezer.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Compress text into dense reasoning maps",
+    "Reduce token usage by 80%+",
+    "Preserve code blocks, key definitions, and structural markers"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

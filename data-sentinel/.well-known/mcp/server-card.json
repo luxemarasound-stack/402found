@@ -1,0 +1,75 @@
+{
+  "name": "Data Sentinel",
+  "version": "1.0.0",
+  "description": "Deep second-pass scan for sensitive data that slipped through initial PII scrubbing. Detects JWT tokens, API keys, private keys, connection strings, internal IPs/hostnames, medical records, crypto wallets, encoded blobs, and more. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://data-sentinel.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "scan_leaks",
+      "description": "Deep second-pass scan for sensitive data that may have slipped through initial PII scrubbing. Detects JWT tokens, API keys, private keys, connection strings, internal IPs, medical records, crypto wallets, encoded secrets, and more.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to scan for leaked sensitive data"
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "clean": {
+            "type": "boolean",
+            "description": "True if no sensitive data was found"
+          },
+          "leak_count": {
+            "type": "integer",
+            "description": "Number of sensitive items detected"
+          },
+          "leaks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "description": "Category of leak (jwt_token, aws_key, internal_ip, etc.)" },
+                "match": { "type": "string", "description": "Masked version of the matched sensitive data" },
+                "context": { "type": "string", "description": "Surrounding text for locating the leak" },
+                "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+              }
+            },
+            "description": "Individual leak signals with masked matches"
+          },
+          "categories_found": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Unique categories of leaks detected"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

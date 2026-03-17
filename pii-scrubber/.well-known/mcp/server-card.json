@@ -1,0 +1,62 @@
+{
+  "name": "PII Scrubber",
+  "version": "1.0.0",
+  "description": "Strips personally identifiable information (SSNs, emails, API keys, phone numbers, addresses, credit cards, IP addresses) from text before agents send it to third parties. GDPR/HIPAA aligned. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://pii-scrubber.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.005",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "scrub_pii",
+      "description": "Strips personally identifiable information (SSNs, emails, API keys, phone numbers, addresses, credit cards, IP addresses) from text. GDPR/HIPAA aligned.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to scrub PII from"
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "scrubbed": {
+            "type": "string",
+            "description": "The text with all PII replaced by redaction placeholders"
+          },
+          "items_removed": {
+            "type": "integer",
+            "description": "Number of PII items detected and removed"
+          },
+          "types_found": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Types of PII found (email, ssn, phone, credit_card, ip_address, api_key, street_address)"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

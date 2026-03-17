@@ -1,0 +1,25 @@
+{
+  "name": "card-registry",
+  "version": "1.0.0",
+  "description": "Hosts agent-card.json files at permanent public URLs. Pay-per-card via x402 (USDC on Base).",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js"
+  },
+  "keywords": ["mcp", "agent-card", "registry", "x402", "a2a"],
+  "author": "402found.dev",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Token Squeezer",
+  "version": "1.0.0",
+  "description": "Compresses large text, code, or conversation history into hyper-dense Reasoning Maps optimized for LLM context windows. Saves 80%+ on token costs. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://token-squeezer.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "squeeze",
+      "description": "Compresses large text, code, or conversation history into a hyper-dense Reasoning Map optimized for LLM context windows. Saves 80%+ on token costs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to compress"
+          },
+          "target_tokens": {
+            "type": "integer",
+            "description": "Target token count for the compressed output (default: 500)",
+            "default": 500
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "compressed": {
+            "type": "string",
+            "description": "The compressed reasoning map"
+          },
+          "original_tokens": {
+            "type": "integer",
+            "description": "Token count of the original input"
+          },
+          "compressed_tokens": {
+            "type": "integer",
+            "description": "Token count of the compressed output"
+          },
+          "savings_pct": {
+            "type": "integer",
+            "description": "Percentage of tokens saved"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

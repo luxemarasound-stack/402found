@@ -1,0 +1,32 @@
+{
+  "spec_version": "2026-03",
+  "name": "Data Sentinel",
+  "description": "Deep second-pass scan for sensitive data that slipped through initial PII scrubbing. Detects JWT tokens, API keys, private keys, connection strings, internal IPs/hostnames, medical records, crypto wallets, encoded blobs, and more. Pay-per-request via x402.",
+  "url": "https://data-sentinel.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Detect leaked credentials (JWT, API keys, private keys, connection strings)",
+    "Detect financial identifiers (IBAN, SWIFT/BIC, crypto wallets)",
+    "Detect personal identifiers (passport, DOB, medical records, drivers license)",
+    "Detect internal infrastructure leaks (private IPs, hostnames, file paths)",
+    "Detect encoded secrets (base64 blobs)"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

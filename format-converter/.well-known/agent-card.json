@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Format Converter",
+  "description": "Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Pure parsing, zero external dependencies. Pay-per-conversion via x402.",
+  "url": "https://format-converter.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Convert between JSON, CSV, XML, YAML, Markdown, HTML, TOML",
+    "Flatten nested JSON to CSV with dot-notation",
+    "Zero external ML or API dependencies"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

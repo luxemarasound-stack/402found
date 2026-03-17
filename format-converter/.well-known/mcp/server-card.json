@@ -1,0 +1,51 @@
+{
+  "name": "Format Converter",
+  "version": "1.0.0",
+  "description": "Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Pure parsing, zero external dependencies. Pay-per-conversion via x402 (USDC on Base).",
+  "url": "https://format-converter.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "convert",
+      "description": "Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Handles nested JSON flattening with dot-notation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "string", "description": "The content to convert" },
+          "from": { "type": "string", "enum": ["json", "csv", "xml", "yaml", "markdown", "html", "toml"], "description": "Source format" },
+          "to": { "type": "string", "enum": ["json", "csv", "xml", "yaml", "markdown", "html", "toml"], "description": "Target format" }
+        },
+        "required": ["data", "from", "to"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "converted": { "type": "string", "description": "The converted content" },
+          "from": { "type": "string" },
+          "to": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

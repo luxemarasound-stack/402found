@@ -1,0 +1,60 @@
+{
+  "name": "Agent Cost Meter",
+  "version": "1.0.0",
+  "description": "Tracks cumulative agent session spend against budget ceilings. Calculates cost from token usage and API calls, returns budget status with actionable recommendations. Covers OWASP FinOps runaway-spend prevention. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://agent-cost-meter.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.002",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "check_agent_cost",
+      "description": "Tracks cumulative agent session spend against a budget ceiling. Calculates cost from token usage and API calls, returns budget status (ok/warning/exceeded) with actionable recommendations.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agentId": { "type": "string", "description": "Unique identifier for the agent session" },
+          "action": { "type": "string", "description": "Description of the action being costed" },
+          "tokenCount": { "type": "number", "description": "Number of tokens consumed" },
+          "apiCalls": { "type": "number", "description": "Number of API calls made" }
+        },
+        "required": ["agentId", "action"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "agentId": { "type": "string" },
+          "sessionCost": { "type": "number", "description": "Cumulative session cost in USD" },
+          "budgetStatus": { "type": "string", "enum": ["ok", "warning", "exceeded"] },
+          "breakdown": {
+            "type": "object",
+            "properties": {
+              "tokens": { "type": "number" },
+              "calls": { "type": "number" }
+            }
+          },
+          "recommendation": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

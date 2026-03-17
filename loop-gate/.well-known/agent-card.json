@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Loop-Gate",
+  "description": "Detects recursive agent loops using a counting bloom filter. Returns loop status for free; charges a reset fee via x402 (USDC on Base) to clear the block.",
+  "url": "https://loop-gate.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Detect recursive agent tool-call loops",
+    "Bloom-filter-based loop counting (3+ calls in 30s window)",
+    "Paid loop-reset to clear blocked agents"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.005",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

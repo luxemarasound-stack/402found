@@ -1,0 +1,85 @@
+{
+  "name": "Permission Guard",
+  "version": "1.0.0",
+  "description": "Checks if an agent's requested action exceeds its defined permission scope. Validates action+resource against a scope array, flags dangerous operations, detects privilege escalation. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://permission-guard.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.002",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "check_permission",
+      "description": "Checks if an agent's requested action exceeds its defined scope. Pass the action, resource, and the agent's permission scope. Returns allowed/denied with violation details.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "description": "The action the agent wants to perform (e.g. read, write, delete, execute)"
+          },
+          "resource": {
+            "type": "string",
+            "description": "The resource path being accessed (e.g. db/users, files/config/*)"
+          },
+          "scope": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource": { "type": "string", "description": "Resource pattern (supports * and /* wildcards)" },
+                "actions": { "type": "array", "items": { "type": "string" }, "description": "Allowed actions" }
+              },
+              "required": ["resource", "actions"]
+            },
+            "description": "The agent's defined permission scope"
+          }
+        },
+        "required": ["action", "resource", "scope"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "allowed": {
+            "type": "boolean",
+            "description": "Whether the action is permitted"
+          },
+          "violations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "action": { "type": "string" },
+                "resource": { "type": "string" },
+                "reason": { "type": "string" },
+                "severity": { "type": "string", "enum": ["warning", "denied"] }
+              }
+            },
+            "description": "List of violations found"
+          },
+          "checked_action": { "type": "string" },
+          "checked_resource": { "type": "string" },
+          "scope_size": { "type": "integer" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

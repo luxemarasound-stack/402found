@@ -1,0 +1,29 @@
+{
+  "spec_version": "2026-03",
+  "name": "PII Scrubber",
+  "description": "Strips personally identifiable information (SSNs, emails, API keys, phone numbers, addresses, credit cards, IP addresses) from text before agents send it to third parties. GDPR/HIPAA aligned. Pay-per-request via x402.",
+  "url": "https://pii-scrubber.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Scrub PII from text",
+    "Detect emails, SSNs, phone numbers, credit cards, IP addresses, API keys, street addresses"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.005",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

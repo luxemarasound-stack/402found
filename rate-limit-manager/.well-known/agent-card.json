@@ -1,0 +1,31 @@
+{
+  "spec_version": "2026-03",
+  "name": "Rate Limit Manager",
+  "description": "Manages agent request rate limiting with sliding window and exponential backoff. Prevents rate limit errors for agents calling external APIs. Pay-per-request via x402.",
+  "url": "https://rate-limit-manager.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Sliding window rate limiting per agent+API combination",
+    "Exponential backoff with configurable RPM limits",
+    "Queue position tracking and retry timing",
+    "Stateless rate management for agent infrastructure"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

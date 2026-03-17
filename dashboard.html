@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>402Found — Fleet Dashboard</title>
+<meta name="description" content="Real-time health and request metrics for the 402Found fleet.">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--surface:#111;--border:#1a1a1a;--border-hover:#2a2a2a;
+  --text:#e0e0e0;--text-dim:#777;--text-bright:#fff;
+  --accent:#3b82f6;--accent-dim:#1e3a5f;
+  --green:#22c55e;--green-dim:#0a2e1a;
+  --red:#ef4444;--red-dim:#2e0a0a;
+  --yellow:#eab308;--yellow-dim:#2e2a0a;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,monospace;line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* Header */
+header{padding:60px 0 40px;text-align:center}
+.logo{font-size:2rem;font-weight:700;color:var(--text-bright);letter-spacing:-1px}
+.logo span{color:var(--accent)}
+.subtitle{color:var(--text-dim);font-size:.85rem;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+.back{display:inline-block;margin-top:16px;font-size:.8rem;color:var(--accent);opacity:.7}
+.back:hover{opacity:1}
+
+/* Summary bar */
+.summary{display:flex;justify-content:center;gap:32px;padding:20px 0 40px;flex-wrap:wrap}
+.summary-stat{text-align:center}
+.summary-value{font-size:1.5rem;font-weight:700;color:var(--text-bright)}
+.summary-label{font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* Refresh indicator */
+.refresh-bar{display:flex;justify-content:center;align-items:center;gap:8px;padding-bottom:24px;font-size:.75rem;color:var(--text-dim)}
+.refresh-bar .spinner{width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;display:none}
+.refresh-bar.loading .spinner{display:block;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr;gap:16px;padding-bottom:64px}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+/* Service card */
+.svc{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;transition:border-color .2s}
+.svc:hover{border-color:var(--border-hover)}
+.svc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.svc-name{font-size:.95rem;font-weight:600;color:var(--text-bright)}
+.svc-badge{font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.svc-badge.up{background:var(--green-dim);color:var(--green)}
+.svc-badge.down{background:var(--red-dim);color:var(--red)}
+.svc-badge.checking{background:var(--yellow-dim);color:var(--yellow)}
+.svc-badge.waking{background:var(--accent-dim);color:var(--accent)}
+
+.svc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{padding:12px;background:var(--bg);border-radius:6px;border:1px solid var(--border)}
+.metric-value{font-size:1.1rem;font-weight:700;color:var(--text-bright);font-variant-numeric:tabular-nums}
+.metric-label{font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.metric.wide{grid-column:1/-1}
+
+.svc-url{display:block;margin-top:12px;font-size:.7rem;font-family:monospace;color:var(--accent);opacity:.5}
+.svc-url:hover{opacity:1}
+
+/* Latency bar */
+.latency-bar{height:4px;background:var(--border);border-radius:2px;margin-top:12px;overflow:hidden}
+.latency-fill{height:100%;border-radius:2px;transition:width .3s ease}
+.latency-fill.fast{background:var(--green);width:30%}
+.latency-fill.ok{background:var(--yellow);width:60%}
+.latency-fill.slow{background:var(--red);width:90%}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:24px 0;text-align:center}
+.footer-note{font-size:.75rem;color:var(--text-dim)}
+.footer-note span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">402<span>Found</span></div>
+    <div class="subtitle">Fleet Dashboard</div>
+    <a class="back" href="/">&larr; Back to 402found.dev</a>
+  </header>
+
+  <div class="summary">
+    <div class="summary-stat">
+      <div class="summary-value" id="total-up">—</div>
+      <div class="summary-label">Services Up</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-value" id="total-reqs">—</div>
+      <div class="summary-label">Requests Today</div>
+    </div>
+    <div class="summary-stat">
+      <div class="summary-value" id="avg-latency">—</div>
+      <div class="summary-label">Avg Latency</div>
+    </div>
+  </div>
+
+  <div class="refresh-bar" id="refresh-bar">
+    <div class="spinner"></div>
+    <span id="refresh-text">Checking services…</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <div class="footer-note">Auto-refreshes every 30s &middot; Built on <span>Base</span> network &middot; <a href="/">402found.dev</a></div>
+  </footer>
+</div>
+
+<script>
+const SERVICES = [
+  { id: "pii-scrubber",     name: "PII Scrubber",     host: "pii-scrubber.fly.dev" },
+  { id: "token-squeezer",   name: "Token Squeezer",   host: "token-squeezer.fly.dev" },
+  { id: "loop-gate",        name: "Loop-Gate",         host: "loop-gate.fly.dev" },
+  { id: "format-converter", name: "Format Converter",  host: "format-converter.fly.dev" },
+  { id: "card-registry",    name: "Card Registry",     host: "card-registry.fly.dev" },
+  { id: "the-prospector",              name: "The Prospector",              host: "the-prospector.fly.dev" },
+  { id: "hallucination-detector",      name: "Hallucination Detector",      host: "hallucination-detector.fly.dev" },
+  { id: "permission-guard",            name: "Permission Guard",            host: "permission-guard.fly.dev" },
+  { id: "data-sentinel",               name: "Data Sentinel",               host: "data-sentinel.fly.dev" },
+  { id: "prompt-injection-detector",   name: "Prompt Injection Detector",   host: "prompt-injection-detector.fly.dev" },
+  { id: "agent-cost-meter",            name: "Agent Cost Meter",            host: "agent-cost-meter.fly.dev" },
+  { id: "agent-audit-trail",           name: "Agent Audit Trail",           host: "agent-audit-trail.fly.dev" },
+  { id: "multi-agent-trust-verifier",  name: "Trust Verifier",              host: "multi-agent-trust-verifier.fly.dev" },
+  { id: "rate-limit-manager",          name: "Rate Limit Manager",          host: "rate-limit-manager.fly.dev" },
+];
+
+// In-memory counters — persist across refreshes via sessionStorage
+const STORAGE_KEY = "402_dashboard_stats";
+function loadStats() {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Reset if stored date is not today
+      if (parsed._date === todayStr()) return parsed;
+    }
+  } catch {}
+  return { _date: todayStr() };
+}
+function saveStats(stats) {
+  stats._date = todayStr();
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+}
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+let stats = loadStats();
+
+// Build cards
+const grid = document.getElementById("grid");
+SERVICES.forEach(svc => {
+  grid.insertAdjacentHTML("beforeend", `
+    <div class="svc" id="svc-${svc.id}">
+      <div class="svc-top">
+        <span class="svc-name">${svc.name}</span>
+        <span class="svc-badge checking" id="badge-${svc.id}">Checking</span>
+      </div>
+      <div class="svc-metrics">
+        <div class="metric">
+          <div class="metric-value" id="reqs-${svc.id}">—</div>
+          <div class="metric-label">Requests Today</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value" id="latency-${svc.id}">—</div>
+          <div class="metric-label">Latency</div>
+        </div>
+        <div class="metric wide">
+          <div class="metric-value" id="last-${svc.id}">—</div>
+          <div class="metric-label">Last Checked</div>
+        </div>
+      </div>
+      <div class="latency-bar"><div class="latency-fill" id="bar-${svc.id}"></div></div>
+      <a class="svc-url" href="https://${svc.host}/health">${svc.host}</a>
+    </div>
+  `);
+});
+
+// Single fetch attempt with a given timeout
+async function tryHealth(host, timeoutMs) {
+  const res = await fetch(`https://${host}/health`, {
+    mode: "cors",
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+  return res;
+}
+
+async function checkService(svc) {
+  const badge = document.getElementById(`badge-${svc.id}`);
+  const reqs = document.getElementById(`reqs-${svc.id}`);
+  const latency = document.getElementById(`latency-${svc.id}`);
+  const last = document.getElementById(`last-${svc.id}`);
+  const bar = document.getElementById(`bar-${svc.id}`);
+
+  badge.textContent = "Checking";
+  badge.className = "svc-badge checking";
+
+  const start = performance.now();
+  let res = null;
+  let coldStart = false;
+
+  try {
+    // First attempt — 30s timeout to handle Fly cold starts
+    res = await tryHealth(svc.host, 30000);
+  } catch (firstErr) {
+    // First attempt failed — machine may be waking, show "Waking" and retry
+    badge.textContent = "Waking";
+    badge.className = "svc-badge waking";
+    coldStart = true;
+
+    try {
+      // Wait 3s then retry — the first request likely triggered the wake
+      await new Promise(r => setTimeout(r, 3000));
+      res = await tryHealth(svc.host, 30000);
+    } catch (retryErr) {
+      // Both attempts failed — genuinely down
+      const ms = Math.round(performance.now() - start);
+      badge.textContent = "Down";
+      badge.className = "svc-badge down";
+      latency.textContent = "—";
+      bar.className = "latency-fill slow";
+      bar.style.width = "100%";
+
+      if (!stats[svc.id]) stats[svc.id] = { reqs: 0 };
+      stats[svc.id].lastCheck = new Date().toISOString();
+      stats[svc.id].latency = null;
+      saveStats(stats);
+
+      reqs.textContent = (stats[svc.id]?.reqs || 0).toLocaleString();
+      last.textContent = formatTime(stats[svc.id].lastCheck);
+      return { up: false, ms: null };
+    }
+  }
+
+  const ms = Math.round(performance.now() - start);
+
+  if (res && res.ok) {
+    badge.textContent = coldStart ? "Up (cold)" : "Up";
+    badge.className = "svc-badge up";
+
+    if (!stats[svc.id]) stats[svc.id] = { reqs: 0 };
+    stats[svc.id].reqs++;
+    stats[svc.id].lastCheck = new Date().toISOString();
+    stats[svc.id].latency = ms;
+    saveStats(stats);
+  } else {
+    badge.textContent = "Down";
+    badge.className = "svc-badge down";
+    if (!stats[svc.id]) stats[svc.id] = { reqs: 0 };
+    stats[svc.id].lastCheck = new Date().toISOString();
+    stats[svc.id].latency = null;
+    saveStats(stats);
+  }
+
+  latency.textContent = `${ms}ms`;
+  // Adjusted thresholds: cold starts can be 5-15s, that's normal
+  bar.className = "latency-fill " + (ms < 1000 ? "fast" : ms < 5000 ? "ok" : "slow");
+  bar.style.width = Math.min(100, Math.max(10, ms / 100)) + "%";
+
+  const s = stats[svc.id] || { reqs: 0 };
+  reqs.textContent = s.reqs.toLocaleString();
+  last.textContent = s.lastCheck ? formatTime(s.lastCheck) : "—";
+
+  return { up: res?.ok ?? false, ms };
+}
+
+function formatTime(iso) {
+  const d = new Date(iso);
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+
+async function refreshAll() {
+  const bar = document.getElementById("refresh-bar");
+  const text = document.getElementById("refresh-text");
+  bar.classList.add("loading");
+  text.textContent = "Checking services…";
+
+  const results = await Promise.all(SERVICES.map(s => checkService(s)));
+
+  const upCount = results.filter(r => r.up).length;
+  const latencies = results.filter(r => r.ms != null).map(r => r.ms);
+  const avgMs = latencies.length ? Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length) : null;
+
+  document.getElementById("total-up").textContent = `${upCount}/${SERVICES.length}`;
+  document.getElementById("total-up").style.color = upCount === SERVICES.length ? "var(--green)" : upCount === 0 ? "var(--red)" : "var(--yellow)";
+
+  let totalReqs = 0;
+  SERVICES.forEach(s => { totalReqs += (stats[s.id]?.reqs || 0); });
+  document.getElementById("total-reqs").textContent = totalReqs.toLocaleString();
+  document.getElementById("avg-latency").textContent = avgMs != null ? `${avgMs}ms` : "—";
+
+  bar.classList.remove("loading");
+  text.textContent = `Last updated ${formatTime(new Date().toISOString())} · Next in 30s`;
+}
+
+// Initial check + auto-refresh
+refreshAll();
+setInterval(refreshAll, 30000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "name": "Hallucination Detector",
+  "version": "1.0.0",
+  "description": "Scores AI-generated text for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, hedged authority, entity confusion, and overconfident absolutes. Returns a 0-1 risk score with detailed signals. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://hallucination-detector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "detect_hallucinations",
+      "description": "Scores AI-generated text for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, hedged authority, entity confusion, and overconfident absolutes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The AI-generated text to analyze for hallucination signals"
+          }
+        },
+        "required": ["text"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "number",
+            "description": "Hallucination risk score from 0 (low risk) to 1 (high risk)"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "Risk verdict based on score thresholds"
+          },
+          "signals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "text": { "type": "string" },
+                "reason": { "type": "string" }
+              }
+            },
+            "description": "Individual hallucination signals detected"
+          },
+          "sentence_count": {
+            "type": "integer",
+            "description": "Total sentences analyzed"
+          },
+          "flagged_count": {
+            "type": "integer",
+            "description": "Sentences containing at least one signal"
+          }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Rate Limit Manager",
+  "version": "1.0.0",
+  "description": "Manages agent request rate limiting with sliding window and exponential backoff. Prevents rate limit errors for agents calling external APIs. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://rate-limit-manager.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "check_rate_limit",
+      "description": "Manages agent request rate limiting with sliding window and exponential backoff. Returns whether the request is allowed, retry timing, and backoff strategy.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agentId": { "type": "string", "description": "Unique identifier for the agent" },
+          "targetApi": { "type": "string", "description": "The API endpoint or service being called" },
+          "requestsPerMinute": { "type": "number", "description": "Custom rate limit (defaults to 60 RPM)" }
+        },
+        "required": ["agentId", "targetApi"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "allowed": { "type": "boolean", "description": "Whether the request is within rate limits" },
+          "retryAfterMs": { "type": "number", "description": "Milliseconds to wait before retrying (if rate limited)" },
+          "queuePosition": { "type": "number", "description": "Position in the queue (0 if allowed)" },
+          "backoffStrategy": { "type": "string", "description": "Human-readable backoff strategy description" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

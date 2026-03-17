@@ -1,0 +1,81 @@
+{
+  "name": "Loop-Gate",
+  "version": "1.0.0",
+  "description": "Detects recursive agent loops using a counting bloom filter. check_loop is free; reset_loop requires x402 payment (USDC on Base).",
+  "url": "https://loop-gate.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "check_loop is free. reset_loop requires USDC payment — send to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.005",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "check_loop",
+      "description": "Detects if an agent is stuck in a recursive tool-call loop. Free to call.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "Unique identifier for the calling agent"
+          },
+          "tool_name": {
+            "type": "string",
+            "description": "Name of the tool being called"
+          }
+        },
+        "required": ["agent_id", "tool_name"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["ok", "loop_detected"] },
+          "loop_count": { "type": "integer" },
+          "agent_id": { "type": "string" },
+          "tool_name": { "type": "string" },
+          "window_seconds": { "type": "number" },
+          "suggested_action": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "reset_loop",
+      "description": "Clears loop-detection state for an agent. Requires x402 payment.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "description": "The agent ID to reset"
+          }
+        },
+        "required": ["agent_id"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "agent_id": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

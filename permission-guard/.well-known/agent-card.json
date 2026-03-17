@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Permission Guard",
+  "description": "Checks if an agent's requested action exceeds its defined permission scope. Validates action+resource against a scope array, flags dangerous operations, detects privilege escalation. Pay-per-request via x402.",
+  "url": "https://permission-guard.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Validate agent actions against permission scope",
+    "Detect privilege escalation and out-of-scope access",
+    "Flag dangerous operations (delete, execute, admin, deploy, etc.)"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.002",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

@@ -1,0 +1,74 @@
+402found.dev — Micro-utilities for the agent economy
+
+402found.dev is a marketplace of x402 micropayment-enabled AI agent micro-services.
+Machines pay machines. No accounts. No API keys. No Stripe. Pure USDC on Base network.
+
+All tools use the MCP (Model Context Protocol) and accept payment via the x402 protocol.
+Payment wallet: 0x856401af27a1D59a473a2A8BD92Af3ccAa830376
+USDC contract (Base): 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+Chain: Base (EIP-155 chain ID 8453)
+
+---
+
+THE FLEET
+
+1. PII Scrubber
+   URL: https://pii-scrubber.fly.dev
+   MCP endpoint: POST https://pii-scrubber.fly.dev/mcp
+   Price: $0.005 USDC per request
+   What it does: Strips personally identifiable information from text — SSNs, emails, API keys, phone numbers, street addresses, credit cards, IP addresses. GDPR/HIPAA aligned.
+
+2. Token Squeezer
+   URL: https://token-squeezer.fly.dev
+   MCP endpoint: POST https://token-squeezer.fly.dev/mcp
+   Price: $0.001 USDC per request
+   What it does: Compresses large text, code, or conversation history into hyper-dense Reasoning Maps optimized for LLM context windows. Saves 80%+ on token costs.
+
+3. Loop-Gate
+   URL: https://loop-gate.fly.dev
+   MCP endpoint: POST https://loop-gate.fly.dev/mcp
+   Price: $0.005 USDC per reset (detection is free)
+   What it does: Detects recursive agent tool-call loops using a counting bloom filter. 3+ calls to the same tool within 30 seconds triggers detection. Paid reset clears the block.
+
+4. Card Registry
+   URL: https://card-registry.fly.dev
+   MCP endpoint: POST https://card-registry.fly.dev/mcp
+   Price: $0.001 USDC per month per card
+   What it does: Hosts agent-card.json files at permanent public URLs for businesses that cannot serve them from their own domain. Cards are publicly accessible at /cards/{slug}.json.
+
+5. The Prospector
+   URL: https://the-prospector.fly.dev
+   MCP endpoint: POST https://the-prospector.fly.dev/mcp
+   Price: $0.01 USDC per card generated
+   What it does: Takes a URL and generates a valid agent-card.json following the 2026 A2A spec. Reads only from stable structured sources (llms.txt, robots.txt, sitemap.xml, .well-known files). Never scrapes HTML.
+
+---
+
+HOW x402 PAYMENT WORKS
+
+1. Agent sends a POST request to the tool's /mcp endpoint.
+2. Server responds with HTTP 402 and a JSON body containing the wallet address, USDC amount, and chain info.
+3. Agent sends USDC on Base to the wallet address.
+4. Agent retries the same request with the transaction hash in the X-Payment-Tx header.
+5. Server verifies the transaction on-chain via eth_getTransactionReceipt.
+6. If the payment is valid and the transaction is less than 5 minutes old, the server processes the request and returns the result.
+
+6. Format Converter
+   URL: https://format-converter.fly.dev
+   MCP endpoint: POST https://format-converter.fly.dev/mcp
+   Price: $0.001 USDC per conversion
+   What it does: Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Handles nested JSON flattening to CSV with dot-notation. Pure parsing, zero external ML or API dependencies.
+
+---
+
+DISCOVERY
+
+Each tool publishes an agent-card.json for A2A discovery:
+- https://pii-scrubber.fly.dev/.well-known/agent-card.json
+- https://token-squeezer.fly.dev/.well-known/agent-card.json
+- https://loop-gate.fly.dev/.well-known/agent-card.json
+- https://card-registry.fly.dev/.well-known/agent-card.json
+- https://the-prospector.fly.dev/.well-known/agent-card.json
+- https://format-converter.fly.dev/.well-known/agent-card.json
+
+Parent registry: https://402found.dev/.well-known/agent-card.json

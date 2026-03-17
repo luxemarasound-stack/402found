@@ -1,0 +1,61 @@
+{
+  "name": "The Prospector",
+  "version": "1.0.0",
+  "description": "Generates valid agent-card.json files from stable structured sources. Never scrapes HTML. Pay-per-card via x402 (USDC on Base).",
+  "url": "https://the-prospector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.01",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "prospect",
+      "description": "Takes a URL and generates a valid agent-card.json following the 2026 A2A spec. Reads only from stable structured sources.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The target website URL to generate an agent card for"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Optional list of capabilities if not auto-detected"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description fallback if not auto-detected"
+          }
+        },
+        "required": ["url"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "card": { "type": "object", "description": "The generated agent-card.json" },
+          "sources_checked": { "type": "array", "items": { "type": "string" } },
+          "hosting_upsell": { "type": "object" }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

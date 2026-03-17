@@ -1,0 +1,25 @@
+{
+  "name": "format-converter",
+  "version": "1.0.0",
+  "description": "Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Pay-per-conversion via x402 (USDC on Base).",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js"
+  },
+  "keywords": ["mcp", "format", "converter", "x402"],
+  "author": "402found.dev",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Multi-Agent Trust Verifier",
+  "version": "1.0.0",
+  "description": "Verifies trust between agents by checking goal alignment, spend limits, action scope, and detecting goal drift. Covers OWASP ASI01 Agent Goal Hijack. Pay-per-request via x402 (USDC on Base).",
+  "url": "https://multi-agent-trust-verifier.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.004",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "verify_agent_trust",
+      "description": "Verifies trust between agents by checking goal alignment, spend limits, action scope, and detecting goal drift. Returns trust score and approve/deny/escalate recommendation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "requestingAgentId": { "type": "string", "description": "ID of the agent requesting the action" },
+          "targetAgentId": { "type": "string", "description": "ID of the agent that will execute the action" },
+          "proposedAction": { "type": "string", "description": "Description of the proposed action" },
+          "originalGoal": { "type": "string", "description": "The original goal or task the agent was assigned" },
+          "spendLimit": { "type": "number", "description": "Maximum allowed spend in USD" },
+          "proposedSpend": { "type": "number", "description": "Proposed spend for this action in USD" }
+        },
+        "required": ["requestingAgentId", "targetAgentId", "proposedAction", "originalGoal"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "authorized": { "type": "boolean" },
+          "trustScore": { "type": "number", "description": "Overall trust score 0-1" },
+          "goalAlignmentScore": { "type": "number", "description": "Goal alignment score 0-1" },
+          "violations": { "type": "array", "items": { "type": "string" } },
+          "recommendation": { "type": "string", "enum": ["approve", "deny", "escalate"] }
+        }
+      }
+    }
+  ],
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health",
+    "agent_card": "/.well-known/agent-card.json"
+  }
+}

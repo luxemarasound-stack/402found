@@ -1,0 +1,10 @@
+card-registry/
+format-converter/
+loop-gate/
+pii-scrubber/
+the-prospector/
+token-squeezer/
+402_MD/
+*.xlsx
+*.docx
+.git/

@@ -1,0 +1,31 @@
+{
+  "spec_version": "2026-03",
+  "name": "Agent Cost Meter",
+  "description": "Tracks cumulative agent session spend against budget ceilings. Calculates cost from token usage and API calls, returns budget status with actionable recommendations. Covers OWASP FinOps runaway-spend prevention. Pay-per-request via x402.",
+  "url": "https://agent-cost-meter.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Track cumulative agent session spend",
+    "Compare spend against configurable budget ceilings",
+    "Return budget status (ok/warning/exceeded) with recommendations",
+    "Cost breakdown by tokens and API calls"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.002",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

@@ -1,0 +1,31 @@
+{
+  "spec_version": "2026-03",
+  "name": "Prompt Injection Detector",
+  "description": "Scans agent input for prompt injection attacks. Detects instruction overrides, jailbreak attempts, role-play manipulations, system prompt leakage attempts, hidden instructions, encoding obfuscation, context manipulation, and privilege escalation. Returns confidence score with block/warn/pass recommendation. Pay-per-request via x402.",
+  "url": "https://prompt-injection-detector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Scan text for prompt injection patterns (0-1 confidence)",
+    "Detect instruction overrides, jailbreaks, role-play manipulation",
+    "Detect system prompt leakage, hidden instructions, encoding obfuscation",
+    "Detect context manipulation and privilege escalation"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

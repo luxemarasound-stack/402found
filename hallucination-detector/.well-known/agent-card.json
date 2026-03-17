@@ -1,0 +1,30 @@
+{
+  "spec_version": "2026-03",
+  "name": "Hallucination Detector",
+  "description": "Scores AI-generated text for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, hedged authority, entity confusion, and overconfident absolutes. Returns a 0-1 risk score with detailed signals. Pay-per-request via x402.",
+  "url": "https://hallucination-detector.fly.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "Score AI output for hallucination risk (0-1)",
+    "Detect fabricated precision, invented citations, temporal impossibilities",
+    "Detect hedged authority, entity confusion, overconfident absolutes"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.003",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

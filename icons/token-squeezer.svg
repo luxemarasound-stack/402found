@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Left squeeze chevron -->
+  <polyline points="14,12 22,24 14,36" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right squeeze chevron -->
+  <polyline points="34,12 26,24 34,36" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center compressed dot -->
+  <circle cx="24" cy="24" r="2.5" fill="#00ff88"/>
+</svg>

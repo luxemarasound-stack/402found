@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>402Found — Micro-utilities for the agent economy</title>
+<meta name="description" content="Discover and pay for AI agent services instantly via x402. USDC on Base. No accounts. No friction.">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--surface:#111;--border:#1a1a1a;--border-hover:#2a2a2a;
+  --text:#e0e0e0;--text-dim:#777;--text-bright:#fff;
+  --accent:#3b82f6;--accent-dim:#1e3a5f;
+  --green:#22c55e;--green-dim:#0a2e1a;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,monospace;line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* Header */
+header{padding:80px 0 48px;text-align:center}
+.logo{font-size:2.5rem;font-weight:700;color:var(--text-bright);letter-spacing:-1px}
+.logo span{color:var(--accent)}
+.tagline{color:var(--text-dim);font-size:.95rem;margin-top:4px;letter-spacing:.5px;text-transform:uppercase}
+.intro{margin-top:32px;font-size:1.1rem;color:var(--text);max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7}
+.intro strong{color:var(--text-bright)}
+
+/* Protocol badge */
+.protocol{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:8px 16px;border:1px solid var(--border);border-radius:6px;font-size:.8rem;color:var(--text-dim)}
+.protocol .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Fleet */
+.fleet{padding:48px 0 64px}
+.fleet h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:32px;text-align:center}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;transition:border-color .2s}
+.card:hover{border-color:var(--border-hover)}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.card-name{display:flex;align-items:center;gap:10px;font-size:1rem;font-weight:600;color:var(--text-bright)}
+.card-icon{width:28px;height:28px;flex-shrink:0}
+.card-price{font-size:.8rem;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--green-dim);color:var(--green);white-space:nowrap}
+.card-desc{font-size:.875rem;color:var(--text-dim);margin-bottom:12px;line-height:1.5}
+.card-url{font-size:.75rem;font-family:monospace;color:var(--accent);opacity:.7}
+.card-url:hover{opacity:1}
+
+/* How it works */
+.how{padding:0 0 64px;text-align:center}
+.how h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:24px}
+.steps{display:flex;flex-direction:column;gap:12px;max-width:480px;margin:0 auto;text-align:left}
+@media(min-width:640px){.steps{flex-direction:row;max-width:100%;text-align:center}}
+.step{flex:1;padding:20px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+.step-num{font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.step-text{font-size:.875rem;color:var(--text)}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
+.wallet{font-family:monospace;font-size:.75rem;color:var(--text-dim);word-break:break-all}
+.footer-note{font-size:.75rem;color:var(--text-dim);margin-top:8px}
+.footer-note span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">402<span>Found</span></div>
+    <div class="tagline">Micro-utilities for the agent economy</div>
+    <p class="intro">Discover and pay for AI agent services instantly via <strong>x402</strong>. USDC on Base. No accounts. No friction.</p>
+    <div class="protocol"><span class="dot"></span> x402 protocol &middot; Base network &middot; USDC</div>
+  </header>
+
+  <section class="fleet">
+    <h2>The Fleet</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M24 4L8 12v12c0 10.5 6.8 17.2 16 20 9.2-2.8 16-9.5 16-20V12L24 4z" stroke="#00ff88" stroke-width="2" stroke-linejoin="round"/><line x1="16" y1="18" x2="32" y2="18" stroke="#00ff88" stroke-width="3" stroke-linecap="round" opacity=".9"/><line x1="16" y1="24" x2="28" y2="24" stroke="#00ff88" stroke-width="3" stroke-linecap="round" opacity=".5"/><line x1="16" y1="30" x2="30" y2="30" stroke="#00ff88" stroke-width="3" stroke-linecap="round" opacity=".25"/></svg>PII Scrubber</span>
+          <span class="card-price">$0.005/req</span>
+        </div>
+        <p class="card-desc">Strips PII from text. SSNs, emails, API keys, phone numbers, addresses, credit cards, IPs. GDPR/HIPAA aligned.</p>
+        <a class="card-url" href="https://pii-scrubber.fly.dev/.well-known/agent-card.json">pii-scrubber.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><polyline points="14,12 22,24 14,36" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="34,12 26,24 34,36" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="2.5" fill="#00ff88"/></svg>Token Squeezer</span>
+          <span class="card-price">$0.001/req</span>
+        </div>
+        <p class="card-desc">Compresses text into LLM-optimized Reasoning Maps. Save 80%+ on context window token costs.</p>
+        <a class="card-url" href="https://token-squeezer.fly.dev/.well-known/agent-card.json">token-squeezer.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M30 8.5A14 14 0 1 0 38 18" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/><line x1="33" y1="6" x2="33" y2="20" stroke="#00ff88" stroke-width="2.5" stroke-linecap="round"/><polyline points="27,5 30,8.5 26.5,11" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Loop-Gate</span>
+          <span class="card-price">$0.005/reset</span>
+        </div>
+        <p class="card-desc">Detects and breaks recursive agent loops. Bloom-filter detection, paid reset to resume.</p>
+        <a class="card-url" href="https://loop-gate.fly.dev/.well-known/agent-card.json">loop-gate.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><rect x="12" y="8" width="24" height="16" rx="2" stroke="#00ff88" stroke-width="1.5" opacity=".3"/><rect x="10" y="12" width="24" height="16" rx="2" stroke="#00ff88" stroke-width="1.5" opacity=".55"/><rect x="8" y="16" width="24" height="16" rx="2" stroke="#00ff88" stroke-width="2"/><polyline points="15,24 19,28 27,20" stroke="#00ff88" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="20" r="1.5" fill="#00ff88" opacity=".4"/><circle cx="38" cy="26" r="1.5" fill="#00ff88" opacity=".6"/><circle cx="38" cy="32" r="1.5" fill="#00ff88" opacity=".9"/></svg>Card Registry</span>
+          <span class="card-price">$0.001/mo</span>
+        </div>
+        <p class="card-desc">Hosts agent-card.json files at permanent public URLs. Discoverable by any A2A agent.</p>
+        <a class="card-url" href="https://card-registry.fly.dev/.well-known/agent-card.json">card-registry.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M14 10L24 24" stroke="#00ff88" stroke-width="2.5" stroke-linecap="round"/><path d="M10 8L14 10L12 14" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 6L14 10L16 2" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/><line x1="24" y1="24" x2="38" y2="38" stroke="#00ff88" stroke-width="2.5" stroke-linecap="round"/><polygon points="8,34 12,30 16,34 12,38" stroke="#00ff88" stroke-width="1.5" fill="#00ff88" fill-opacity=".2" stroke-linejoin="round"/><line x1="7" y1="28" x2="7" y2="26" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".5"/><line x1="5" y1="29" x2="3" y2="29" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".5"/></svg>The Prospector</span>
+          <span class="card-price">$0.01/card</span>
+        </div>
+        <p class="card-desc">Generates valid A2A agent cards for any website from stable structured sources. Never scrapes.</p>
+        <a class="card-url" href="https://the-prospector.fly.dev/.well-known/agent-card.json">the-prospector.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="14" height="18" rx="2" stroke="#00ff88" stroke-width="2"/><line x1="10" y1="16" x2="16" y2="16" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="10" y1="20" x2="16" y2="20" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><rect x="28" y="20" width="14" height="18" rx="2" stroke="#00ff88" stroke-width="2"/><line x1="32" y1="26" x2="38" y2="26" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="32" y1="30" x2="38" y2="30" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="21" y1="22" x2="27" y2="26" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/><polyline points="24,23 27,26 24,29" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="24,19 21,22 24,25" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Format Converter</span>
+          <span class="card-price">$0.001/conv</span>
+        </div>
+        <p class="card-desc">Converts between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Nested JSON flattening. Zero external deps.</p>
+        <a class="card-url" href="https://format-converter.fly.dev/.well-known/agent-card.json">format-converter.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><circle cx="20" cy="20" r="12" stroke="#00ff88" stroke-width="2"/><line x1="29" y1="29" x2="40" y2="40" stroke="#00ff88" stroke-width="2.5" stroke-linecap="round"/><path d="M17 16c0-2.5 2-4 4-4s4 1.5 4 4c0 1.8-1.5 2.5-3 3.2v1.3" stroke="#00ff88" stroke-width="2" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="22" cy="24" r="1.2" fill="#00ff88" opacity=".85"/></svg>Hallucination Detector</span>
+          <span class="card-price">$0.003/req</span>
+        </div>
+        <p class="card-desc">Scores AI output for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, and overconfident absolutes.</p>
+        <a class="card-url" href="https://hallucination-detector.fly.dev/.well-known/agent-card.json">hallucination-detector.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M24 4L8 12v12c0 10.5 6.8 17.2 16 20 9.2-2.8 16-9.5 16-20V12L24 4z" stroke="#00ff88" stroke-width="2" stroke-linejoin="round"/><line x1="14" y1="22" x2="34" y2="22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".5"/><rect x="20" y="13" width="8" height="6" rx="1.5" stroke="#00ff88" stroke-width="1.5"/><path d="M22 13v-2a2 2 0 0 1 4 0v2" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round"/><line x1="21" y1="28" x2="27" y2="34" stroke="#00ff88" stroke-width="2" stroke-linecap="round" opacity=".4"/><line x1="27" y1="28" x2="21" y2="34" stroke="#00ff88" stroke-width="2" stroke-linecap="round" opacity=".4"/></svg>Permission Guard</span>
+          <span class="card-price">$0.002/req</span>
+        </div>
+        <p class="card-desc">Checks if an agent's requested action exceeds its defined scope. Detects privilege escalation and flags dangerous operations.</p>
+        <a class="card-url" href="https://permission-guard.fly.dev/.well-known/agent-card.json">permission-guard.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M4 24c0 0 8-14 20-14s20 14 20 14-8 14-20 14S4 24 4 24z" stroke="#00ff88" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="24" r="7" stroke="#00ff88" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="#00ff88" fill-opacity=".3" stroke="#00ff88" stroke-width="1.5"/><line x1="24" y1="14" x2="24" y2="10" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".4"/><line x1="24" y1="38" x2="24" y2="34" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".4"/><line x1="34" y1="24" x2="38" y2="24" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".4"/><line x1="14" y1="24" x2="10" y2="24" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".4"/></svg>Data Sentinel</span>
+          <span class="card-price">$0.003/req</span>
+        </div>
+        <p class="card-desc">Deep second-pass scan for sensitive data that slipped through PII scrubbing. Catches JWTs, keys, connection strings, internal IPs, and more.</p>
+        <a class="card-url" href="https://data-sentinel.fly.dev/.well-known/agent-card.json">data-sentinel.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M24 4L8 12v12c0 10.5 6.8 17.2 16 20 9.2-2.8 16-9.5 16-20V12L24 4z" stroke="#00ff88" stroke-width="2" stroke-linejoin="round"/><line x1="16" y1="20" x2="32" y2="20" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><path d="M18 26l2 2 4-4" stroke="#00ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="26" y1="26" x2="30" y2="26" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="17" y1="32" x2="31" y2="32" stroke="#00ff88" stroke-width="1" stroke-linecap="round" opacity=".3"/></svg>Prompt Injection Detector</span>
+          <span class="card-price">$0.003/req</span>
+        </div>
+        <p class="card-desc">Scans agent input for prompt injection attacks. Detects instruction overrides, jailbreaks, role-play manipulation, system prompt leakage, and hidden instructions.</p>
+        <a class="card-url" href="https://prompt-injection-detector.fly.dev/.well-known/agent-card.json">prompt-injection-detector.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="22" rx="3" stroke="#00ff88" stroke-width="2"/><line x1="8" y1="22" x2="40" y2="22" stroke="#00ff88" stroke-width="1.5" opacity=".4"/><text x="14" y="19" font-size="7" fill="#00ff88" font-family="monospace" opacity=".8">$</text><text x="22" y="19" font-size="7" fill="#00ff88" font-family="monospace" opacity=".5">$</text><text x="30" y="19" font-size="7" fill="#00ff88" font-family="monospace" opacity=".3">$</text><line x1="14" y1="28" x2="24" y2="28" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="14" y1="32" x2="20" y2="32" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><circle cx="34" cy="30" r="3" stroke="#00ff88" stroke-width="1.5" opacity=".7"/><line x1="33" y1="29" x2="35" y2="31" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".7"/></svg>Agent Cost Meter</span>
+          <span class="card-price">$0.002/req</span>
+        </div>
+        <p class="card-desc">Tracks cumulative agent session spend against budget ceilings. Calculates cost from token usage and API calls, returns budget status with recommendations.</p>
+        <a class="card-url" href="https://agent-cost-meter.fly.dev/.well-known/agent-card.json">agent-cost-meter.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><rect x="10" y="8" width="28" height="32" rx="2" stroke="#00ff88" stroke-width="2"/><line x1="16" y1="16" x2="32" y2="16" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="16" y1="22" x2="28" y2="22" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".45"/><line x1="16" y1="28" x2="30" y2="28" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><path d="M32 30l4 4" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/><circle cx="36" cy="34" r="1.5" fill="#00ff88" opacity=".6"/><path d="M8 12l-3-3" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><circle cx="5" cy="9" r="1" fill="#00ff88" opacity=".3"/></svg>Agent Audit Trail</span>
+          <span class="card-price">$0.001/log</span>
+        </div>
+        <p class="card-desc">Creates tamper-evident, HMAC-signed audit log entries for agent actions. Returns signed receipts the caller stores for compliance.</p>
+        <a class="card-url" href="https://agent-audit-trail.fly.dev/.well-known/agent-card.json">agent-audit-trail.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><circle cx="16" cy="24" r="6" stroke="#00ff88" stroke-width="2"/><circle cx="32" cy="24" r="6" stroke="#00ff88" stroke-width="2"/><line x1="22" y1="24" x2="26" y2="24" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/><path d="M16 14v-4" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><path d="M32 14v-4" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><path d="M12 16l-3-3" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><path d="M36 16l3-3" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><path d="M24 38v-6" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".5"/><polyline points="21,35 24,38 27,35" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>Trust Verifier</span>
+          <span class="card-price">$0.004/req</span>
+        </div>
+        <p class="card-desc">Verifies trust between agents by checking goal alignment, spend limits, and action scope. Detects goal drift and hijack attempts. OWASP ASI01 coverage.</p>
+        <a class="card-url" href="https://multi-agent-trust-verifier.fly.dev/.well-known/agent-card.json">multi-agent-trust-verifier.fly.dev</a>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-name"><svg class="card-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="14" stroke="#00ff88" stroke-width="2"/><line x1="24" y1="24" x2="24" y2="14" stroke="#00ff88" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="24" x2="32" y2="24" stroke="#00ff88" stroke-width="2" stroke-linecap="round" opacity=".6"/><circle cx="24" cy="24" r="2" fill="#00ff88"/><line x1="24" y1="6" x2="24" y2="8" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><line x1="24" y1="40" x2="24" y2="42" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><line x1="6" y1="24" x2="8" y2="24" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/><line x1="40" y1="24" x2="42" y2="24" stroke="#00ff88" stroke-width="1.5" stroke-linecap="round" opacity=".3"/></svg>Rate Limit Manager</span>
+          <span class="card-price">$0.001/req</span>
+        </div>
+        <p class="card-desc">Manages agent request rate limiting with sliding window and exponential backoff. Prevents rate limit errors for agents calling external APIs.</p>
+        <a class="card-url" href="https://rate-limit-manager.fly.dev/.well-known/agent-card.json">rate-limit-manager.fly.dev</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Step 1</div>
+        <div class="step-text">Agent calls the tool endpoint</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 2</div>
+        <div class="step-text">Server returns HTTP 402 + wallet address</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 3</div>
+        <div class="step-text">Agent sends USDC on Base</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 4</div>
+        <div class="step-text">Retry with tx hash &mdash; get result</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wallet">0x856401af27a1D59a473a2A8BD92Af3ccAa830376</div>
+    <div class="footer-note">Built on <span>Base</span> network &middot; Powered by x402 &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="https://402found.dev">402found.dev</a></div>
+  </footer>
+</div>
+
+</body>
+</html>

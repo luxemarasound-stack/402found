@@ -1,0 +1,17 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.luxemarasound-stack/agent-registry",
+    "title": "Agent Registry",
+    "description": "Central inventory of all deployed AI agents. Register, query, monitor health, generate compliance reports, export CSV/JSON, and visualize dependency graphs.",
+    "version": "1.0.0",
+    "repository": {
+          "url": "https://github.com/luxemarasound-stack/402found",
+          "source": "github"
+    },
+    "remotes": [
+          {
+                  "type": "streamable-http",
+                  "url": "https://agent-registry.402found.dev/mcp"
+          }
+    ]
+}

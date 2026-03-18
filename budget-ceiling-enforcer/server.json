@@ -1,0 +1,25 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.luxemarasound-stack/budget-ceiling-enforcer",
+    "title": "Budget Ceiling Enforcer",
+    "description": "Prevents runaway cloud costs from AI agent usage. Enforces hard budget limits with configurable actions: throttle, pause, alert, or kill. Spend projection and webhook alerts. Pay-per-check via x402 (USDC on Base).",
+    "version": "1.0.0",
+    "repository": {
+          "url": "https://github.com/luxemarasound-stack/402found",
+          "source": "github"
+    },
+    "remotes": [
+          {
+                  "type": "streamable-http",
+                  "url": "https://budget-ceiling-enforcer.402found.dev/mcp",
+                  "headers": [
+                            {
+                                        "name": "X-Payment-Tx",
+                                        "description": "x402 payment transaction hash (USDC on Base). Send 0.02 USDC to receive this hash.",
+                                        "isRequired": true,
+                                        "isSecret": false
+                            }
+                  ]
+          }
+    ]
+}

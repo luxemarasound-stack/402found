@@ -1,0 +1,17 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.luxemarasound-stack/performance-baseline-tracker",
+    "title": "Performance Baseline Tracker",
+    "description": "Captures and monitors AI agent output quality over time. Baseline snapshots, multi-metric drift detection, semantic similarity, trend analysis, and configurable sensitivity.",
+    "version": "1.0.0",
+    "repository": {
+          "url": "https://github.com/luxemarasound-stack/402found",
+          "source": "github"
+    },
+    "remotes": [
+          {
+                  "type": "streamable-http",
+                  "url": "https://performance-baseline-tracker.402found.dev/mcp"
+          }
+    ]
+}

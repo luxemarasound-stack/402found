@@ -1,0 +1,15 @@
+{
+  "spec_version": "2026-03",
+  "name": "Performance Baseline Tracker",
+  "description": "Captures and monitors AI agent output quality over time. Baseline snapshots, multi-metric drift detection (latency, tokens, semantic similarity, error rate), trend analysis, and configurable sensitivity.",
+  "url": "https://performance-baseline-tracker.402found.dev",
+  "provider": { "organization": "402found.dev", "url": "https://402found.dev" },
+  "capabilities": [
+    "baseline-capture", "drift-detection", "semantic-similarity",
+    "trend-analysis", "quality-monitoring", "ab-testing"
+  ],
+  "authentication": { "schemes": ["x402"] },
+  "payment": { "protocol": "x402", "amount": "0.10", "currency": "USDC", "network": "eip155:8453" },
+  "endpoints": { "mcp": "/mcp", "openapi": "/openapi.json", "health": "/health" },
+  "generated_by": "402found.dev"
+}

@@ -1,0 +1,35 @@
+{
+  "name": "performance-baseline-tracker",
+  "version": "1.0.0",
+  "provider": { "organization": "402found.dev", "url": "https://402found.dev" },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.10",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "capture_baseline",
+      "description": "Capture a baseline snapshot from sample input/output pairs. Stores latency, token usage, output length, error rate, and semantic fingerprints."
+    },
+    {
+      "name": "compare_performance",
+      "description": "Compare new outputs against baseline. Returns drift scores (0-100), alert level, degradation details, and recommendations."
+    },
+    {
+      "name": "get_trend",
+      "description": "Get drift trend data over time (7/30 days). Returns time-series points for charting plus summary stats."
+    },
+    {
+      "name": "list_baselines",
+      "description": "List all stored baseline snapshots for an agent with metrics summaries."
+    }
+  ]
+}

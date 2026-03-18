@@ -1,0 +1,28 @@
+{
+  "name": "agent-registry",
+  "version": "1.0.0",
+  "provider": { "organization": "402found.dev", "url": "https://402found.dev" },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.001",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    { "name": "register_agent", "description": "Register a new AI agent with metadata, dependencies, permissions, and tags." },
+    { "name": "update_agent", "description": "Update metadata for an existing agent." },
+    { "name": "deactivate_agent", "description": "Archive/deactivate an agent." },
+    { "name": "query_agents", "description": "Search and filter agents by owner, status, tag, or name. Supports pagination." },
+    { "name": "dashboard", "description": "Fleet-wide status: counts, health summary, stale agents, recent registrations." },
+    { "name": "dependency_graph", "description": "Dependency graph of all active agents." },
+    { "name": "compliance_report", "description": "All agents with permissions, health, and staleness for compliance." },
+    { "name": "report_health", "description": "Record a health check result for an agent." },
+    { "name": "export_agents", "description": "Export full registry in JSON or CSV format." }
+  ]
+}

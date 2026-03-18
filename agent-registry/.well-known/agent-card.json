@@ -1,0 +1,15 @@
+{
+  "spec_version": "2026-03",
+  "name": "Agent Registry",
+  "description": "Central inventory of all deployed AI agents. Register, query, monitor health, generate compliance reports, export CSV/JSON, and visualize dependency graphs.",
+  "url": "https://agent-registry.402found.dev",
+  "provider": { "organization": "402found.dev", "url": "https://402found.dev" },
+  "capabilities": [
+    "agent-registration", "metadata-management", "health-monitoring",
+    "dependency-graph", "compliance-reporting", "csv-export", "pagination", "search"
+  ],
+  "authentication": { "schemes": ["x402"] },
+  "payment": { "protocol": "x402", "amount": "0.001", "currency": "USDC", "network": "eip155:8453" },
+  "endpoints": { "mcp": "/mcp", "openapi": "/openapi.json", "health": "/health" },
+  "generated_by": "402found.dev"
+}

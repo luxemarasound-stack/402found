@@ -1,0 +1,25 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.luxemarasound-stack/code-quality-scanner",
+    "title": "Code Quality Scanner",
+    "description": "Detects vibe-code anti-patterns in AI agent code before production deployment. AST-powered analysis for Python, JavaScript, and LLM prompts. Pay-per-scan via x402 (USDC on Base).",
+    "version": "1.0.0",
+    "repository": {
+          "url": "https://github.com/luxemarasound-stack/402found",
+          "source": "github"
+    },
+    "remotes": [
+          {
+                  "type": "streamable-http",
+                  "url": "https://code-quality-scanner.402found.dev/mcp",
+                  "headers": [
+                            {
+                                        "name": "X-Payment-Tx",
+                                        "description": "x402 payment transaction hash (USDC on Base). Send 0.05 USDC to receive this hash.",
+                                        "isRequired": true,
+                                        "isSecret": false
+                            }
+                  ]
+          }
+    ]
+}

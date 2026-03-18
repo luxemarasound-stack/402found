@@ -1,0 +1,77 @@
+{
+  "name": "budget-ceiling-enforcer",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "authentication": {
+    "schemes": ["x402"],
+    "instructions": "Send USDC on Base to the recipient address, then include the tx hash in the X-Payment-Tx header."
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.02",
+    "currency": "USDC",
+    "network": "eip155:8453",
+    "recipient": "0x856401af27a1D59a473a2A8BD92Af3ccAa830376",
+    "contract": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
+  },
+  "tools": [
+    {
+      "name": "check_budget",
+      "description": "Checks current spend against budget ceiling and returns enforcement action. Optionally records new spend.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["agentId"],
+        "properties": {
+          "agentId": { "type": "string", "description": "Unique identifier for the agent" },
+          "currentSpend": { "type": "number", "description": "Amount in USD to add to spend tracking" },
+          "action": { "type": "string", "description": "Description of the spend action" }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "agentId": { "type": "string" },
+          "currentSpend": { "type": "number" },
+          "ceiling": { "type": "number" },
+          "percentUsed": { "type": "number" },
+          "projectedSpend": { "type": "number" },
+          "timeUntilExhaustion": { "type": "string" },
+          "enforcementAction": { "type": "string", "enum": ["NONE", "THROTTLE", "PAUSE", "ALERT", "KILL"] },
+          "enforced": { "type": "boolean" },
+          "dryRun": { "type": "boolean" },
+          "budgetStatus": { "type": "string", "enum": ["ok", "warning", "critical", "exceeded"] },
+          "recommendation": { "type": "string" },
+          "throttleDelayMs": { "type": "number" }
+        }
+      }
+    },
+    {
+      "name": "configure_budget",
+      "description": "Sets or updates budget ceiling configuration for an agent.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["agentId", "ceiling"],
+        "properties": {
+          "agentId": { "type": "string", "description": "Unique identifier for the agent" },
+          "ceiling": { "type": "number", "description": "Budget ceiling in USD" },
+          "period": { "type": "string", "enum": ["daily", "weekly", "monthly"], "description": "Budget period" },
+          "thresholds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "percent": { "type": "number" },
+                "action": { "type": "string", "enum": ["THROTTLE", "PAUSE", "ALERT", "KILL"] }
+              }
+            }
+          },
+          "webhookUrl": { "type": "string", "description": "Webhook URL for alert notifications" },
+          "dryRun": { "type": "boolean", "description": "If true, alerts only — no enforcement" }
+        }
+      }
+    }
+  ]
+}

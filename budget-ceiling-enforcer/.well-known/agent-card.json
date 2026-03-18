@@ -1,0 +1,33 @@
+{
+  "spec_version": "2026-03",
+  "name": "Budget Ceiling Enforcer",
+  "description": "Prevents runaway cloud costs from AI agent usage. Tracks cumulative spend, enforces hard budget limits with configurable actions (THROTTLE, PAUSE, ALERT, KILL), projects spend, and delivers webhook alerts.",
+  "url": "https://budget-ceiling-enforcer.402found.dev",
+  "provider": {
+    "organization": "402found.dev",
+    "url": "https://402found.dev"
+  },
+  "capabilities": [
+    "budget-enforcement",
+    "spend-tracking",
+    "cost-projection",
+    "webhook-alerts",
+    "throttle-control",
+    "dry-run-mode"
+  ],
+  "authentication": {
+    "schemes": ["x402"]
+  },
+  "payment": {
+    "protocol": "x402",
+    "amount": "0.02",
+    "currency": "USDC",
+    "network": "eip155:8453"
+  },
+  "endpoints": {
+    "mcp": "/mcp",
+    "openapi": "/openapi.json",
+    "health": "/health"
+  },
+  "generated_by": "402found.dev"
+}

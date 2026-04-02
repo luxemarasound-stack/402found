@@ -4,7 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 import { detectHallucinations } from "./detector.js";
-import { verifyPayment, getPaymentRequirement } from "./payment.js";
+import { createPaymentGate } from "@402found/payment-gate";
 import { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 import { readFileSync } from "node:fs";
@@ -39,7 +39,7 @@ app.use(express.json());
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://402found.dev");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx, Authorization");
   if (_req.method === "OPTIONS") { res.status(204).end(); return; }
   next();
 });
@@ -119,35 +119,12 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-async function paymentGate(
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): Promise<void> {
-  const txHash = req.headers["x-payment-tx"] as string | undefined;
-
-  if (!txHash) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment Required",
-    });
-    return;
-  }
-
-  const valid = await verifyPayment(txHash);
-  if (!valid) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment verification failed",
-      detail: "Transaction not found, not confirmed, wrong recipient, or expired (>5 min).",
-    });
-    return;
-  }
-
-  next();
-}
+const paymentGate = createPaymentGate({
+  serviceName: "hallucination-detector",
+  price: 0.003,
+  description: "Scores AI-generated text for likely hallucinated facts",
+  resource: "https://hallucination-detector.402found.dev/mcp",
+});
 
 app.post("/mcp", paymentGate, async (req, res) => {
   const transport = new StreamableHTTPServerTransport({

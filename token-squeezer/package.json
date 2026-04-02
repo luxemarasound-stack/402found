@@ -13,6 +13,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@402found/payment-gate": "file:../packages/payment-gate",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "dotenv": "^17.3.1",
     "express": "^5.2.1"

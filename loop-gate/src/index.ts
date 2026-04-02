@@ -4,14 +4,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 import { checkLoop, resetAgent } from "./bloom.js";
-import {
-  verifyPayment,
-  getPaymentRequirement,
-  getCachedResult,
-  cacheResult,
-  isTxHashUsed,
-  markTxHashUsed,
-} from "./payment.js";
+import { createPaymentGate } from "@402found/payment-gate";
+import { getCachedResult, cacheResult, isTxHashUsed, markTxHashUsed } from "./cache.js";
 import { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 import { readFileSync } from "node:fs";
@@ -100,7 +94,7 @@ app.use(express.json());
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://402found.dev");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx, Authorization");
   if (_req.method === "OPTIONS") { res.status(204).end(); return; }
   next();
 });
@@ -180,6 +174,13 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
+const _paymentGate = createPaymentGate({
+  serviceName: "loop-gate",
+  price: 0.005,
+  description: "Clears loop-detection state for blocked agents",
+  resource: "https://loop-gate.402found.dev/mcp",
+});
+
 // Payment gate only triggers for reset_loop — check_loop is free
 async function paymentGate(
   req: express.Request,
@@ -203,22 +204,11 @@ async function paymentGate(
     }
   }
 
-  const txHash = req.headers["x-payment-tx"] as string | undefined;
-
-  if (!txHash) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment Required",
-    });
-    return;
-  }
-
   // Reject replayed tx hashes — each payment can only be used once
-  if (isTxHashUsed(txHash)) {
+  const txHash = req.headers["x-payment-tx"] as string | undefined;
+  if (txHash && isTxHashUsed(txHash)) {
     res.status(402).json({
       x402Version: 1,
-      accepts: [getPaymentRequirement()],
       error: "Transaction already used",
       detail:
         "This tx hash has already been redeemed. If you need another reset, send a new payment.",
@@ -226,25 +216,14 @@ async function paymentGate(
     return;
   }
 
-  const valid = await verifyPayment(txHash);
-  if (!valid) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment verification failed",
-      detail:
-        "Transaction not found, not confirmed, wrong recipient, or expired (>5 min).",
-    });
-    return;
-  }
-
-  // Payment verified — mark tx as used so it can't be replayed
-  markTxHashUsed(txHash);
-
-  // Stash the idempotency key so the response handler can cache the result
-  (req as any)._idempotencyKey = idempotencyKey;
-
-  next();
+  // Delegate to shared payment gate
+  await _paymentGate(req, res, async () => {
+    // Payment verified — mark tx as used so it can't be replayed
+    if (txHash) markTxHashUsed(txHash);
+    // Stash the idempotency key so the response handler can cache the result
+    (req as any)._idempotencyKey = idempotencyKey;
+    next();
+  });
 }
 
 app.post("/mcp", paymentGate, async (req, res) => {

@@ -8,12 +8,24 @@
     "url": "https://402found.dev"
   },
   "capabilities": [
-    "PII Scrubber — Strips PII from text (SSNs, emails, API keys, phones, addresses, credit cards, IPs). GDPR/HIPAA aligned. $0.005/req via pii-scrubber.fly.dev",
-    "Token Squeezer — Compresses text into LLM-optimized Reasoning Maps. 80%+ token savings. $0.001/req via token-squeezer.fly.dev",
-    "Loop-Gate — Detects and breaks recursive agent loops using a counting bloom filter. $0.005/reset via loop-gate.fly.dev",
-    "Card Registry — Hosts agent-card.json files at permanent public URLs. $0.001/mo via card-registry.fly.dev",
-    "The Prospector — Generates valid A2A agent cards for any website from stable structured sources. $0.01/card via the-prospector.fly.dev",
-    "Format Converter — Converts between JSON, CSV, XML, YAML, Markdown, HTML, TOML. Zero external deps. $0.001/conv via format-converter.fly.dev"
+    "PII Scrubber — Strips PII from text (SSNs, emails, API keys, phones, addresses, credit cards, IPs). GDPR/HIPAA aligned. $0.005/req via pii-scrubber.402found.dev",
+    "Token Squeezer — Compresses text into LLM-optimized Reasoning Maps. 80%+ token savings. $0.001/req via token-squeezer.402found.dev",
+    "Loop-Gate — Detects and breaks recursive agent loops using a counting bloom filter. $0.005/reset via loop-gate.402found.dev",
+    "Card Registry — Hosts agent-card.json files at permanent public URLs. $0.001/mo via card-registry.402found.dev",
+    "The Prospector — Generates valid A2A agent cards for any website from stable structured sources. $0.01/card via the-prospector.402found.dev",
+    "Format Converter — Converts between JSON, CSV, XML, YAML, Markdown, HTML, TOML. Zero external deps. $0.001/conv via format-converter.402found.dev",
+    "Hallucination Detector — Scores AI output for likely hallucinated facts. Fabricated precision, invented citations, temporal impossibilities. $0.003/req via hallucination-detector.402found.dev",
+    "Permission Guard — Checks if an agent's requested action exceeds its defined scope. Detects privilege escalation. $0.002/req via permission-guard.402found.dev",
+    "Data Sentinel — Deep second-pass scan for sensitive data. Catches JWTs, keys, connection strings, internal IPs. $0.003/req via data-sentinel.402found.dev",
+    "Prompt Injection Detector — Scans agent input for prompt injection attacks. Instruction overrides, jailbreaks, role-play manipulation. $0.003/req via prompt-injection-detector.402found.dev",
+    "Agent Cost Meter — Tracks cumulative agent session spend against budget ceilings. $0.002/req via agent-cost-meter.402found.dev",
+    "Agent Audit Trail — Creates tamper-evident, HMAC-signed audit log entries for agent actions. $0.001/log via agent-audit-trail.402found.dev",
+    "Trust Verifier — Verifies trust between agents by checking goal alignment, spend limits, action scope. OWASP ASI01. $0.004/req via trust-verifier.402found.dev",
+    "Rate Limit Manager — Manages agent request rate limiting with sliding window and exponential backoff. $0.001/req via rate-limit-manager.402found.dev",
+    "Code Quality Scanner — Detects vibe-code anti-patterns in AI agent code. AST-powered for Python, JS, LLM prompts. $0.05/scan via code-quality-scanner.402found.dev",
+    "Budget Ceiling Enforcer — Prevents runaway cloud costs from AI agent usage. Hard budget limits with throttle/pause/alert/kill. $0.02/check via budget-ceiling-enforcer.402found.dev",
+    "Agent Registry — Central inventory of deployed AI agents. Register, query, monitor health, compliance reports. $0.001/query via agent-registry.402found.dev",
+    "Performance Baseline Tracker — Captures and monitors AI agent output quality over time. Drift detection, semantic similarity. $0.10/compare via performance-baseline-tracker.402found.dev"
   ],
   "authentication": {
     "schemes": ["x402"],
@@ -29,45 +41,129 @@
   "fleet": [
     {
       "name": "PII Scrubber",
-      "url": "https://pii-scrubber.fly.dev",
-      "mcp": "https://pii-scrubber.fly.dev/mcp",
-      "discovery": "https://pii-scrubber.fly.dev/.well-known/agent-card.json",
+      "url": "https://pii-scrubber.402found.dev",
+      "mcp": "https://pii-scrubber.402found.dev/mcp",
+      "discovery": "https://pii-scrubber.402found.dev/.well-known/agent-card.json",
       "price": "0.005 USDC/request"
     },
     {
       "name": "Token Squeezer",
-      "url": "https://token-squeezer.fly.dev",
-      "mcp": "https://token-squeezer.fly.dev/mcp",
-      "discovery": "https://token-squeezer.fly.dev/.well-known/agent-card.json",
+      "url": "https://token-squeezer.402found.dev",
+      "mcp": "https://token-squeezer.402found.dev/mcp",
+      "discovery": "https://token-squeezer.402found.dev/.well-known/agent-card.json",
       "price": "0.001 USDC/request"
     },
     {
       "name": "Loop-Gate",
-      "url": "https://loop-gate.fly.dev",
-      "mcp": "https://loop-gate.fly.dev/mcp",
-      "discovery": "https://loop-gate.fly.dev/.well-known/agent-card.json",
+      "url": "https://loop-gate.402found.dev",
+      "mcp": "https://loop-gate.402found.dev/mcp",
+      "discovery": "https://loop-gate.402found.dev/.well-known/agent-card.json",
       "price": "0.005 USDC/reset"
     },
     {
       "name": "Card Registry",
-      "url": "https://card-registry.fly.dev",
-      "mcp": "https://card-registry.fly.dev/mcp",
-      "discovery": "https://card-registry.fly.dev/.well-known/agent-card.json",
+      "url": "https://card-registry.402found.dev",
+      "mcp": "https://card-registry.402found.dev/mcp",
+      "discovery": "https://card-registry.402found.dev/.well-known/agent-card.json",
       "price": "0.001 USDC/month"
     },
     {
       "name": "The Prospector",
-      "url": "https://the-prospector.fly.dev",
-      "mcp": "https://the-prospector.fly.dev/mcp",
-      "discovery": "https://the-prospector.fly.dev/.well-known/agent-card.json",
+      "url": "https://the-prospector.402found.dev",
+      "mcp": "https://the-prospector.402found.dev/mcp",
+      "discovery": "https://the-prospector.402found.dev/.well-known/agent-card.json",
       "price": "0.01 USDC/card"
     },
     {
       "name": "Format Converter",
-      "url": "https://format-converter.fly.dev",
-      "mcp": "https://format-converter.fly.dev/mcp",
-      "discovery": "https://format-converter.fly.dev/.well-known/agent-card.json",
+      "url": "https://format-converter.402found.dev",
+      "mcp": "https://format-converter.402found.dev/mcp",
+      "discovery": "https://format-converter.402found.dev/.well-known/agent-card.json",
       "price": "0.001 USDC/conversion"
+    },
+    {
+      "name": "Hallucination Detector",
+      "url": "https://hallucination-detector.402found.dev",
+      "mcp": "https://hallucination-detector.402found.dev/mcp",
+      "discovery": "https://hallucination-detector.402found.dev/.well-known/agent-card.json",
+      "price": "0.003 USDC/request"
+    },
+    {
+      "name": "Permission Guard",
+      "url": "https://permission-guard.402found.dev",
+      "mcp": "https://permission-guard.402found.dev/mcp",
+      "discovery": "https://permission-guard.402found.dev/.well-known/agent-card.json",
+      "price": "0.002 USDC/request"
+    },
+    {
+      "name": "Data Sentinel",
+      "url": "https://data-sentinel.402found.dev",
+      "mcp": "https://data-sentinel.402found.dev/mcp",
+      "discovery": "https://data-sentinel.402found.dev/.well-known/agent-card.json",
+      "price": "0.003 USDC/request"
+    },
+    {
+      "name": "Prompt Injection Detector",
+      "url": "https://prompt-injection-detector.402found.dev",
+      "mcp": "https://prompt-injection-detector.402found.dev/mcp",
+      "discovery": "https://prompt-injection-detector.402found.dev/.well-known/agent-card.json",
+      "price": "0.003 USDC/request"
+    },
+    {
+      "name": "Agent Cost Meter",
+      "url": "https://agent-cost-meter.402found.dev",
+      "mcp": "https://agent-cost-meter.402found.dev/mcp",
+      "discovery": "https://agent-cost-meter.402found.dev/.well-known/agent-card.json",
+      "price": "0.002 USDC/request"
+    },
+    {
+      "name": "Agent Audit Trail",
+      "url": "https://agent-audit-trail.402found.dev",
+      "mcp": "https://agent-audit-trail.402found.dev/mcp",
+      "discovery": "https://agent-audit-trail.402found.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/log"
+    },
+    {
+      "name": "Trust Verifier",
+      "url": "https://trust-verifier.402found.dev",
+      "mcp": "https://trust-verifier.402found.dev/mcp",
+      "discovery": "https://trust-verifier.402found.dev/.well-known/agent-card.json",
+      "price": "0.004 USDC/request"
+    },
+    {
+      "name": "Rate Limit Manager",
+      "url": "https://rate-limit-manager.402found.dev",
+      "mcp": "https://rate-limit-manager.402found.dev/mcp",
+      "discovery": "https://rate-limit-manager.402found.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/request"
+    },
+    {
+      "name": "Code Quality Scanner",
+      "url": "https://code-quality-scanner.402found.dev",
+      "mcp": "https://code-quality-scanner.402found.dev/mcp",
+      "discovery": "https://code-quality-scanner.402found.dev/.well-known/agent-card.json",
+      "price": "0.05 USDC/scan"
+    },
+    {
+      "name": "Budget Ceiling Enforcer",
+      "url": "https://budget-ceiling-enforcer.402found.dev",
+      "mcp": "https://budget-ceiling-enforcer.402found.dev/mcp",
+      "discovery": "https://budget-ceiling-enforcer.402found.dev/.well-known/agent-card.json",
+      "price": "0.02 USDC/check"
+    },
+    {
+      "name": "Agent Registry",
+      "url": "https://agent-registry.402found.dev",
+      "mcp": "https://agent-registry.402found.dev/mcp",
+      "discovery": "https://agent-registry.402found.dev/.well-known/agent-card.json",
+      "price": "0.001 USDC/query"
+    },
+    {
+      "name": "Performance Baseline Tracker",
+      "url": "https://performance-baseline-tracker.402found.dev",
+      "mcp": "https://performance-baseline-tracker.402found.dev/mcp",
+      "discovery": "https://performance-baseline-tracker.402found.dev/.well-known/agent-card.json",
+      "price": "0.10 USDC/compare"
     }
   ],
   "endpoints": {

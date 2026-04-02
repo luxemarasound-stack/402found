@@ -13,34 +13,112 @@ Chain: Base (EIP-155 chain ID 8453)
 THE FLEET
 
 1. PII Scrubber
-   URL: https://pii-scrubber.fly.dev
-   MCP endpoint: POST https://pii-scrubber.fly.dev/mcp
+   URL: https://pii-scrubber.402found.dev
+   MCP endpoint: POST https://pii-scrubber.402found.dev/mcp
    Price: $0.005 USDC per request
    What it does: Strips personally identifiable information from text — SSNs, emails, API keys, phone numbers, street addresses, credit cards, IP addresses. GDPR/HIPAA aligned.
 
 2. Token Squeezer
-   URL: https://token-squeezer.fly.dev
-   MCP endpoint: POST https://token-squeezer.fly.dev/mcp
+   URL: https://token-squeezer.402found.dev
+   MCP endpoint: POST https://token-squeezer.402found.dev/mcp
    Price: $0.001 USDC per request
    What it does: Compresses large text, code, or conversation history into hyper-dense Reasoning Maps optimized for LLM context windows. Saves 80%+ on token costs.
 
 3. Loop-Gate
-   URL: https://loop-gate.fly.dev
-   MCP endpoint: POST https://loop-gate.fly.dev/mcp
+   URL: https://loop-gate.402found.dev
+   MCP endpoint: POST https://loop-gate.402found.dev/mcp
    Price: $0.005 USDC per reset (detection is free)
    What it does: Detects recursive agent tool-call loops using a counting bloom filter. 3+ calls to the same tool within 30 seconds triggers detection. Paid reset clears the block.
 
 4. Card Registry
-   URL: https://card-registry.fly.dev
-   MCP endpoint: POST https://card-registry.fly.dev/mcp
+   URL: https://card-registry.402found.dev
+   MCP endpoint: POST https://card-registry.402found.dev/mcp
    Price: $0.001 USDC per month per card
    What it does: Hosts agent-card.json files at permanent public URLs for businesses that cannot serve them from their own domain. Cards are publicly accessible at /cards/{slug}.json.
 
 5. The Prospector
-   URL: https://the-prospector.fly.dev
-   MCP endpoint: POST https://the-prospector.fly.dev/mcp
+   URL: https://the-prospector.402found.dev
+   MCP endpoint: POST https://the-prospector.402found.dev/mcp
    Price: $0.01 USDC per card generated
    What it does: Takes a URL and generates a valid agent-card.json following the 2026 A2A spec. Reads only from stable structured sources (llms.txt, robots.txt, sitemap.xml, .well-known files). Never scrapes HTML.
+
+6. Format Converter
+   URL: https://format-converter.402found.dev
+   MCP endpoint: POST https://format-converter.402found.dev/mcp
+   Price: $0.001 USDC per conversion
+   What it does: Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Handles nested JSON flattening to CSV with dot-notation. Pure parsing, zero external dependencies.
+
+7. Hallucination Detector
+   URL: https://hallucination-detector.402found.dev
+   MCP endpoint: POST https://hallucination-detector.402found.dev/mcp
+   Price: $0.003 USDC per request
+   What it does: Scores AI output for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, and overconfident absolutes.
+
+8. Permission Guard
+   URL: https://permission-guard.402found.dev
+   MCP endpoint: POST https://permission-guard.402found.dev/mcp
+   Price: $0.002 USDC per request
+   What it does: Checks if an agent's requested action exceeds its defined scope. Detects privilege escalation and flags dangerous operations.
+
+9. Data Sentinel
+   URL: https://data-sentinel.402found.dev
+   MCP endpoint: POST https://data-sentinel.402found.dev/mcp
+   Price: $0.003 USDC per request
+   What it does: Deep second-pass scan for sensitive data that slipped through PII scrubbing. Catches JWTs, API keys, connection strings, internal IPs.
+
+10. Prompt Injection Detector
+    URL: https://prompt-injection-detector.402found.dev
+    MCP endpoint: POST https://prompt-injection-detector.402found.dev/mcp
+    Price: $0.003 USDC per request
+    What it does: Scans agent input for prompt injection attacks. Detects instruction overrides, jailbreaks, role-play manipulation, system prompt leakage, hidden instructions.
+
+11. Agent Cost Meter
+    URL: https://agent-cost-meter.402found.dev
+    MCP endpoint: POST https://agent-cost-meter.402found.dev/mcp
+    Price: $0.002 USDC per request
+    What it does: Tracks cumulative agent session spend against budget ceilings. Calculates cost from token usage and API calls, returns budget status.
+
+12. Agent Audit Trail
+    URL: https://agent-audit-trail.402found.dev
+    MCP endpoint: POST https://agent-audit-trail.402found.dev/mcp
+    Price: $0.001 USDC per log entry
+    What it does: Creates tamper-evident, HMAC-signed audit log entries for agent actions. Returns signed receipts the caller stores for compliance.
+
+13. Trust Verifier
+    URL: https://trust-verifier.402found.dev
+    MCP endpoint: POST https://trust-verifier.402found.dev/mcp
+    Price: $0.004 USDC per request
+    What it does: Verifies trust between agents by checking goal alignment, spend limits, and action scope. Detects goal drift and hijack attempts. OWASP ASI01 coverage.
+
+14. Rate Limit Manager
+    URL: https://rate-limit-manager.402found.dev
+    MCP endpoint: POST https://rate-limit-manager.402found.dev/mcp
+    Price: $0.001 USDC per request
+    What it does: Manages agent request rate limiting with sliding window and exponential backoff. Prevents rate limit errors for agents calling external APIs.
+
+15. Code Quality Scanner
+    URL: https://code-quality-scanner.402found.dev
+    MCP endpoint: POST https://code-quality-scanner.402found.dev/mcp
+    Price: $0.05 USDC per scan
+    What it does: Detects vibe-code anti-patterns in AI agent code before production deployment. AST-powered analysis for Python, JavaScript, and LLM prompts.
+
+16. Budget Ceiling Enforcer
+    URL: https://budget-ceiling-enforcer.402found.dev
+    MCP endpoint: POST https://budget-ceiling-enforcer.402found.dev/mcp
+    Price: $0.02 USDC per check
+    What it does: Prevents runaway cloud costs from AI agent usage. Enforces hard budget limits with configurable actions: throttle, pause, alert, or kill.
+
+17. Agent Registry
+    URL: https://agent-registry.402found.dev
+    MCP endpoint: POST https://agent-registry.402found.dev/mcp
+    Price: $0.001 USDC per query
+    What it does: Central inventory of all deployed AI agents. Register, query, monitor health, generate compliance reports, export CSV/JSON, visualize dependency graphs.
+
+18. Performance Baseline Tracker
+    URL: https://performance-baseline-tracker.402found.dev
+    MCP endpoint: POST https://performance-baseline-tracker.402found.dev/mcp
+    Price: $0.10 USDC per comparison
+    What it does: Captures and monitors AI agent output quality over time. Baseline snapshots, multi-metric drift detection, semantic similarity, trend analysis.
 
 ---
 
@@ -53,22 +131,28 @@ HOW x402 PAYMENT WORKS
 5. Server verifies the transaction on-chain via eth_getTransactionReceipt.
 6. If the payment is valid and the transaction is less than 5 minutes old, the server processes the request and returns the result.
 
-6. Format Converter
-   URL: https://format-converter.fly.dev
-   MCP endpoint: POST https://format-converter.fly.dev/mcp
-   Price: $0.001 USDC per conversion
-   What it does: Converts data between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Handles nested JSON flattening to CSV with dot-notation. Pure parsing, zero external ML or API dependencies.
-
 ---
 
 DISCOVERY
 
 Each tool publishes an agent-card.json for A2A discovery:
-- https://pii-scrubber.fly.dev/.well-known/agent-card.json
-- https://token-squeezer.fly.dev/.well-known/agent-card.json
-- https://loop-gate.fly.dev/.well-known/agent-card.json
-- https://card-registry.fly.dev/.well-known/agent-card.json
-- https://the-prospector.fly.dev/.well-known/agent-card.json
-- https://format-converter.fly.dev/.well-known/agent-card.json
+- https://pii-scrubber.402found.dev/.well-known/agent-card.json
+- https://token-squeezer.402found.dev/.well-known/agent-card.json
+- https://loop-gate.402found.dev/.well-known/agent-card.json
+- https://card-registry.402found.dev/.well-known/agent-card.json
+- https://the-prospector.402found.dev/.well-known/agent-card.json
+- https://format-converter.402found.dev/.well-known/agent-card.json
+- https://hallucination-detector.402found.dev/.well-known/agent-card.json
+- https://permission-guard.402found.dev/.well-known/agent-card.json
+- https://data-sentinel.402found.dev/.well-known/agent-card.json
+- https://prompt-injection-detector.402found.dev/.well-known/agent-card.json
+- https://agent-cost-meter.402found.dev/.well-known/agent-card.json
+- https://agent-audit-trail.402found.dev/.well-known/agent-card.json
+- https://trust-verifier.402found.dev/.well-known/agent-card.json
+- https://rate-limit-manager.402found.dev/.well-known/agent-card.json
+- https://code-quality-scanner.402found.dev/.well-known/agent-card.json
+- https://budget-ceiling-enforcer.402found.dev/.well-known/agent-card.json
+- https://agent-registry.402found.dev/.well-known/agent-card.json
+- https://performance-baseline-tracker.402found.dev/.well-known/agent-card.json
 
 Parent registry: https://402found.dev/.well-known/agent-card.json

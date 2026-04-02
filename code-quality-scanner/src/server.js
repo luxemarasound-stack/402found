@@ -1,120 +1,11 @@
 import { createServer } from "node:http";
+import { verifyRequest } from "@402found/payment-gate";
 import { scanPython } from "./scanners/python.js";
 import { scanJavaScript } from "./scanners/javascript.js";
 import { scanPrompt } from "./scanners/prompt.js";
 import { computeScore } from "./scoring.js";
 
 const PORT = process.env.PORT || 8080;
-
-// ---- x402 Payment Configuration ----
-const PAYMENT_CONFIG = {
-  rpcUrl: process.env.CHAIN_RPC_URL || "https://mainnet.base.org",
-  walletAddress: process.env.WALLET_ADDRESS || "",
-  usdcContract: process.env.USDC_CONTRACT || "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-  paymentAmount: process.env.PAYMENT_AMOUNT || "0.05",
-  chainId: process.env.CHAIN_ID || "8453",
-};
-
-const TRANSFER_EVENT_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-const MAX_TX_AGE_MS = 5 * 60 * 1000; // 5 minutes
-
-function getPaymentRequirement() {
-  return {
-    scheme: "exact",
-    network: `eip155:${PAYMENT_CONFIG.chainId}`,
-    maxAmountRequired: String(Math.round(parseFloat(PAYMENT_CONFIG.paymentAmount) * 1_000_000)),
-    asset: PAYMENT_CONFIG.usdcContract,
-    payTo: PAYMENT_CONFIG.walletAddress,
-    resource: "https://code-quality-scanner.402found.dev/scan",
-    description: "Detects vibe-code anti-patterns in AI agent code. AST-powered analysis for Python, JavaScript, and LLM prompts.",
-    mimeType: "application/json",
-    maxTimeoutSeconds: 30,
-    outputSchema: {
-      input: {
-        type: "http",
-        method: "POST",
-        properties: {
-          code: { type: "string", description: "Source code or prompt text to scan" },
-          language: { type: "string", description: "python | javascript | prompt | auto (optional)" },
-          filename: { type: "string", description: "Filename for language inference (optional)" },
-        },
-        required: ["code"],
-      },
-      output: {
-        type: "object",
-        properties: {
-          qualityScore: { type: "number" },
-          productionReady: { type: "string" },
-          issueCount: { type: "object" },
-          issues: { type: "array" },
-        },
-      },
-    },
-  };
-}
-
-async function verifyPayment(txHash) {
-  const { rpcUrl, walletAddress, usdcContract } = PAYMENT_CONFIG;
-  if (!walletAddress) return false;
-
-  try {
-    // Get transaction receipt
-    const receiptRes = await fetch(rpcUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getTransactionReceipt", params: [txHash], id: 1 }),
-    });
-    const { result: receipt } = await receiptRes.json();
-    if (!receipt || receipt.status !== "0x1") return false;
-
-    // Verify USDC Transfer event to our wallet
-    const validLog = receipt.logs?.some((log) => {
-      if (log.address.toLowerCase() !== usdcContract.toLowerCase()) return false;
-      if (log.topics[0] !== TRANSFER_EVENT_TOPIC) return false;
-      const recipient = "0x" + log.topics[2].slice(26);
-      return recipient.toLowerCase() === walletAddress.toLowerCase();
-    });
-    if (!validLog) return false;
-
-    // Anti-replay: reject transactions older than 5 minutes
-    const blockRes = await fetch(rpcUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jsonrpc: "2.0", method: "eth_getBlockByNumber", params: [receipt.blockNumber, false], id: 2 }),
-    });
-    const { result: block } = await blockRes.json();
-    if (!block) return false;
-
-    const age = Date.now() - parseInt(block.timestamp, 16) * 1000;
-    return age <= MAX_TX_AGE_MS;
-  } catch (err) {
-    console.error("Payment verification error:", err.message);
-    return false;
-  }
-}
-
-// Returns true if payment is valid or sends 402 and returns false
-async function paymentGate(req, res) {
-  const txHash = req.headers["x-payment-tx"];
-
-  if (!txHash) {
-    json(res, 402, { x402Version: 1, accepts: [getPaymentRequirement()], error: "Payment Required" });
-    return false;
-  }
-
-  const valid = await verifyPayment(txHash);
-  if (!valid) {
-    json(res, 402, {
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment verification failed",
-      detail: "Transaction not found, not confirmed, wrong recipient, or expired (>5 min).",
-    });
-    return false;
-  }
-
-  return true;
-}
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -130,7 +21,7 @@ function json(res, status, body) {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "https://402found.dev",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, X-Payment-Tx",
+    "Access-Control-Allow-Headers": "Content-Type, X-Payment-Tx, Authorization",
   });
   res.end(JSON.stringify(body));
 }
@@ -140,9 +31,15 @@ async function handleScan(req, res) {
     return json(res, 405, { error: "POST required" });
   }
 
-  // x402 payment gate — require payment before processing
-  const paid = await paymentGate(req, res);
-  if (!paid) return;
+  const payResult = await verifyRequest(req, {
+    serviceName: "code-quality-scanner",
+    price: 0.05,
+    description: "Detects vibe-code anti-patterns in AI agent code",
+    resource: "https://code-quality-scanner.402found.dev/scan",
+  });
+  if (!payResult.valid) {
+    return json(res, payResult.statusCode, payResult.body);
+  }
 
   let payload;
   try {
@@ -176,13 +73,11 @@ async function handleScan(req, res) {
       issues = scanPrompt(code);
       break;
     default:
-      // Run all scanners and merge
       issues = [
         ...scanPython(code),
         ...scanJavaScript(code),
         ...scanPrompt(code),
       ];
-      // Deduplicate by line+message
       const seen = new Set();
       issues = issues.filter((i) => {
         const key = `${i.line}:${i.message}`;
@@ -277,7 +172,7 @@ const server = createServer((req, res) => {
     res.writeHead(204, {
       "Access-Control-Allow-Origin": "https://402found.dev",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, X-Payment-Tx",
+      "Access-Control-Allow-Headers": "Content-Type, X-Payment-Tx, Authorization",
     });
     res.end();
     return;

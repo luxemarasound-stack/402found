@@ -10,6 +10,7 @@
     "test": "node --test src/__tests__/scanner.test.js"
   },
   "dependencies": {
+    "@402found/payment-gate": "file:../packages/payment-gate",
     "acorn": "^8.12.1",
     "acorn-walk": "^8.3.4"
   }

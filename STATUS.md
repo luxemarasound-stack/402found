@@ -1,6 +1,6 @@
 # 402Found.dev — Project Status
 
-**Last updated:** 2026-03-20
+**Last updated:** 2026-04-01
 
 ---
 
@@ -57,69 +57,83 @@
 | Component | Platform | Status |
 |-----------|----------|--------|
 | 18 agent services | Google Cloud Run (us-east1, luxemara-tools) | Live |
-| Landing page (index.html) | fly.io (402found-site) | Live but needs migration |
-| Dashboard (dashboard.html) | fly.io (402found-site) | Live but needs migration |
+| Landing page (index.html) | fly.io (402found-site) | Live (needs migration to Cloud Run) |
+| Dashboard (dashboard.html) | fly.io (402found-site) | Live (needs migration to Cloud Run) |
 | DNS (*.402found.dev) | Cloudflare → ghs.googlehosted.com | Live |
 | Redirects (.com, .io → .dev) | nginx on fly.io | Live |
 
 ---
 
-## What's Been Done (Git History)
+## Session Log — April 1, 2026
 
-1. Initial fleet deployed (~15 agents)
-2. Migrated all agents from fly.io → Google Cloud Run
-3. Added Code Quality Scanner
-4. Set up clean 402found.dev subdomains via Cloudflare
-5. Added nginx redirects for .com and .io → .dev
-6. Fixed redirect loop (made .dev the default server block)
-7. Added Budget Ceiling Enforcer
-8. Added Agent Registry
-9. Added Performance Baseline Tracker
-10. Fixed browser "dangerous site" warnings (replaced clickable links with copy-to-clipboard)
-11. Created WEBSITE-IMPROVEMENTS.md roadmap
+### DEPLOYED to fly.io (live now at 402found.dev):
+- [x] Inline SVG favicon
+- [x] Open Graph + Twitter Card meta tags
+- [x] JSON-LD structured data (Schema.org WebApplication)
+- [x] Live green/red status dots on all 18 agent cards (pings /health)
+- [x] Interactive "Try It" PII Scrubber demo
+- [x] "Integrate in 30 Seconds" code snippet with copy button
+- [x] About 402Found section
+- [x] robots.txt + sitemap.xml (added to Dockerfile)
+- [x] Fixed all stale *.fly.dev URLs → *.402found.dev in agent-card.json and llms.txt
+- [x] Added all 12 missing agents to agent-card.json (was 6, now 18)
+- [x] Complete llms.txt rewrite with all 18 agents
+
+### PAYMENT ENV VARS DEPLOYED (April 1, 2026):
+- [x] All 18/18 agents updated with correct per-service pricing + real HMAC secret
+- [x] format-converter — completed after quota cooldown
+- Script was run via Google Cloud Shell (gcloud not installed locally)
+- code-quality-scanner: DEPLOYED with payment gate (April 1, 2026) — /health OK, /scan returns 402 correctly
+
+### DRAFTED but NOT YET POSTED:
+- [x] `LAUNCH-POSTS.md` — content for HN, Reddit (x2), Twitter/X thread
 
 ---
 
-## What's Next
+## NEXT STEPS (in priority order)
 
-### PRIORITY 0 — Migrate Landing Page (DO THIS FIRST)
-- [ ] Move index.html + dashboard.html from fly.io to Google Cloud Run
-- [ ] Update Cloudflare DNS to point root domain to Cloud Run
-- [ ] Decommission fly.io entirely (single platform = simpler billing)
+### Step 1: Enable Payments (Marii — run these commands)
+```bash
+# 1. Login to Google Cloud
+gcloud auth login
 
-### PRIORITY 1 — Trust Signals (High Impact, Low Effort)
-- [ ] Add favicon (402 icon or logo)
-- [ ] Add contact/support email in footer
-- [ ] Add Terms of Service / Privacy Policy (minimal 1-pager)
-- [ ] Add GitHub links (if repos go public)
+# 2. Select the right project
+gcloud config set project luxemara-tools
 
-### PRIORITY 2 — Social Proof & Status
-- [ ] Live status indicators per agent (green/red dots from /health)
-- [ ] Request counter per agent or total
-- [ ] Uptime badge
-- [ ] Response time display (~200ms)
+# 3. Navigate to the project
+cd /c/Users/simpl/projects/402found
 
-### PRIORITY 3 — Content & Documentation
-- [ ] About section (mission, LUXEMARA connection)
-- [ ] API docs links per agent (auto-generate from OpenAPI)
-- [ ] "Try It" interactive demo (PII Scrubber is most intuitive)
-- [ ] Integration code snippet (3-line curl/fetch example)
+# 4. Run the deployment script
+bash deploy-env-vars.sh
+```
+This sets payment config (wallet, prices, HMAC secret) on all 18 Cloud Run agents.
 
-### PRIORITY 4 — Design Polish
-- [ ] Logo (replace text-only "402Found" with SVG mark)
-- [ ] Make Dashboard link more prominent
-- [ ] "Integrate" section between Fleet and How It Works
-- [ ] Mobile nav improvements
+### Step 2: Test Payments (Marii)
+After running the script, test one agent to confirm x402 flow works:
+1. Send a POST request to any agent endpoint
+2. Should get HTTP 402 back with price + wallet address
+3. Send USDC on Base to the wallet
+4. Retry with tx hash in X-Payment-Tx header — should get result
 
-### PRIORITY 5 — SEO & Discovery
-- [ ] Open Graph meta tags
-- [ ] Structured data (JSON-LD Schema.org)
-- [ ] /robots.txt and /sitemap.xml
-- [ ] Google Search Console submission
+### Step 3: Post Launch Content (Marii)
+Copy from LAUNCH-POSTS.md:
+1. Twitter/X thread first
+2. Hacker News Show HN next morning (Tues-Thurs, 9am ET best)
+3. Reddit r/LocalLLaMA and r/cryptocurrency same day
 
-### PRIORITY 6 — Per-Agent Polish
-- [ ] Add root `/` HTML route to each Cloud Run service (health status page)
-- [ ] Google Safe Browsing appeal if flagged
+### Step 4: Submit to Google Search Console (Marii)
+Verify 402found.dev so it gets indexed
+
+### Step 5: CORS Headers (Claude — next session)
+Status dots will show "offline" until agents add CORS headers to /health.
+Need to add `Access-Control-Allow-Origin: https://402found.dev` to each agent.
+
+### Step 6: Agent Landing Pages (Claude — next session)
+Each agent subdomain (e.g., pii-scrubber.402found.dev/) currently returns 404.
+Add a root `/` HTML route with agent name, docs, and status.
+
+### Step 7: Migrate Landing Page to Cloud Run (Claude — future)
+Move from fly.io to Cloud Run for single-platform billing.
 
 ---
 
@@ -128,13 +142,31 @@
 | File | Purpose |
 |------|---------|
 | PROJECT_RULES.md | Mandatory checklist for every new agent service |
-| WEBSITE-IMPROVEMENTS.md | Detailed website improvement roadmap |
-| index.html | Main landing page (18 agent cards, how it works) |
+| WEBSITE-IMPROVEMENTS.md | Detailed website improvement roadmap (7 items checked off today) |
+| STATUS.md | This file — session log and next steps |
+| index.html | Main landing page (18 agent cards, demo, snippets) |
 | dashboard.html | Fleet health dashboard (real-time status) |
-| 402 Fleet.xlsx | Fleet tracking spreadsheet |
+| deploy-env-vars.sh | Payment config script (GITIGNORED — contains HMAC secret) |
+| LAUNCH-POSTS.md | Launch post drafts for 4 platforms (GITIGNORED) |
+| .well-known/agent-card.json | A2A discovery — all 18 agents with correct URLs |
+| llms.txt | LLM-readable site description — all 18 agents |
+| robots.txt | Search engine crawling permissions |
+| sitemap.xml | Search engine page index |
 | nginx.conf | Redirect config for .com/.io → .dev |
+| 402 Fleet.xlsx | Fleet tracking spreadsheet |
+
+---
+
+## Important Notes
+
+- **Trust Verifier naming mismatch:** Website says "trust-verifier" but Cloud Run service is "multi-agent-trust-verifier"
+- **HMAC secret** is stored only in deploy-env-vars.sh (gitignored). Do not commit this file.
+- **Cold starts:** Agents take ~3s on first request (Cloud Run min-instances=0). Consider min-instances=1 for high-traffic agents later.
+- **Revenue math:** At current prices ($0.001-$0.10/req), need thousands of requests for $200/month. Marketing + discoverability is the bottleneck, not tech.
 
 ---
 
 ## Blockers
-- **Landing page migration** — still on fly.io, needs to move to Cloud Run for single-platform simplicity
+- ~~code-quality-scanner~~ — RESOLVED: deployed with payment gate, 402 flow verified
+- **CORS on /health** — status dots won't work from the browser until agents have CORS headers
+- **Landing page on fly.io** — still needs migration to Cloud Run for single billing

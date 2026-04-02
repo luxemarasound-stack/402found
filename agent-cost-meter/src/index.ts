@@ -40,6 +40,15 @@ mcpServer.tool(
 
 const app = express();
 app.use(express.json());
+// CORS - allow 402found.dev to reach /health for status dots
+app.use((_req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://402found.dev");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx");
+  if (_req.method === "OPTIONS") { res.status(204).end(); return; }
+  next();
+});
+
 
 const wellKnownDir = path.resolve(__dirname, "..", ".well-known");
 const agentCard = JSON.parse(readFileSync(path.join(wellKnownDir, "agent-card.json"), "utf-8"));
@@ -75,6 +84,40 @@ app.get("/openapi.json", (_req, res) => {
       },
     },
   });
+});
+
+
+// Landing page
+app.get("/", (_req, res) => {
+  res.setHeader("Content-Type", "text/html");
+  res.send(`<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Cost Meter — 402Found.dev</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#e0e0e0;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{max-width:560px;width:90%;background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:2.5rem;text-align:center}
+h1{font-size:1.5rem;color:#fff;margin-bottom:.5rem}
+.price{color:#00d4aa;font-size:1.1rem;margin-bottom:1rem}
+p{color:#999;line-height:1.6;margin-bottom:1.5rem}
+a{color:#00d4aa;text-decoration:none}a:hover{text-decoration:underline}
+.links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:.9rem}
+.badge{display:inline-block;background:#1a2e28;color:#00d4aa;padding:.25rem .75rem;border-radius:999px;font-size:.8rem;margin-bottom:1rem}
+</style>
+</head><body><div class="card">
+<div class="badge">x402 · USDC on Base</div>
+<h1>Agent Cost Meter</h1>
+<div class="price">$0.002 USDC/request</div>
+<p>Tracks cumulative agent session spend against budget ceilings. Pay-per-request via x402 (USDC on Base).</p>
+<div class="links">
+<a href="/.well-known/agent-card.json">Agent Card</a>
+<a href="/openapi.json">OpenAPI</a>
+<a href="/.well-known/x402">x402 Info</a>
+<a href="/health">Health</a>
+<a href="https://402found.dev">← 402Found.dev</a>
+</div>
+</div></body></html>`);
 });
 
 app.get("/health", (_req, res) => {

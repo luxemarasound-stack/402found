@@ -4,7 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 import { scrubPII } from "./scrubber.js";
-import { verifyPayment, getPaymentRequirement } from "./payment.js";
+import { createPaymentGate } from "@402found/payment-gate";
 import { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 
@@ -41,11 +41,18 @@ app.use(express.json());
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://402found.dev");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Payment-Tx, Authorization");
   if (_req.method === "OPTIONS") { res.status(204).end(); return; }
   next();
 });
 
+
+const paymentGate = createPaymentGate({
+  serviceName: "pii-scrubber",
+  price: 0.005,
+  description: "Strips personally identifiable information from text",
+  resource: "https://pii-scrubber.402found.dev/mcp",
+});
 
 // All /.well-known paths must be publicly accessible — no payment gate
 import { readFileSync } from "node:fs";
@@ -122,37 +129,6 @@ a{color:#00d4aa;text-decoration:none}a:hover{text-decoration:underline}
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
-
-// x402 payment gate middleware for MCP endpoint
-async function paymentGate(
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-): Promise<void> {
-  const txHash = req.headers["x-payment-tx"] as string | undefined;
-
-  if (!txHash) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment Required",
-    });
-    return;
-  }
-
-  const valid = await verifyPayment(txHash);
-  if (!valid) {
-    res.status(402).json({
-      x402Version: 1,
-      accepts: [getPaymentRequirement()],
-      error: "Payment verification failed",
-      detail: "Transaction not found, not confirmed, wrong recipient, or expired (>5 min).",
-    });
-    return;
-  }
-
-  next();
-}
 
 // MCP endpoint with payment gate
 // Each request gets its own stateless transport

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Credits Purchased — 402Found.dev</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#e0e0e0;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.card{max-width:560px;width:90%;background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:2.5rem;text-align:center}
+h1{font-size:1.5rem;color:#fff;margin-bottom:.5rem}
+.check{font-size:3rem;margin-bottom:1rem}
+.amount{color:#00d4aa;font-size:1.2rem;margin-bottom:1.5rem}
+.key-box{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:1rem;margin:1.5rem 0;text-align:left;word-break:break-all;font-family:monospace;font-size:.85rem;color:#00d4aa;position:relative;cursor:pointer}
+.key-box:hover{border-color:#00d4aa}
+.copy-hint{font-size:.8rem;color:#666;margin-top:.5rem}
+.info{color:#999;font-size:.9rem;line-height:1.6;margin:1.5rem 0}
+.usage{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:1rem;text-align:left;margin:1rem 0;font-family:monospace;font-size:.8rem;color:#ccc;overflow-x:auto}
+.links{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem}
+a{color:#00d4aa;text-decoration:none;font-size:.9rem}a:hover{text-decoration:underline}
+.loading{color:#999}
+.error{color:#ff6b6b}
+</style>
+</head>
+<body>
+<div class="card" id="content">
+  <div class="loading">Loading your API key...</div>
+</div>
+<script>
+async function load() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  const content = document.getElementById('content');
+
+  if (!sessionId) {
+    content.innerHTML = '<div class="error">No session ID found.</div>';
+    return;
+  }
+
+  // Poll for key (webhook may take a moment)
+  let data;
+  for (let i = 0; i < 10; i++) {
+    try {
+      const res = await fetch('/api/session/' + sessionId);
+      if (res.ok) { data = await res.json(); break; }
+    } catch {}
+    await new Promise(r => setTimeout(r, 2000));
+  }
+
+  if (!data) {
+    content.innerHTML = '<div class="error">Could not retrieve your API key. Please check your email or contact support.</div>';
+    return;
+  }
+
+  const action = data.isTopUp ? 'Credits Added' : 'Credits Purchased';
+  content.innerHTML = `
+    <div class="check">&#10003;</div>
+    <h1>${action}!</h1>
+    <div class="amount">$${data.amount.toFixed(2)} added to your account</div>
+    <p class="info">Your API key${data.isTopUp ? ' (same key, topped up)' : ''}:</p>
+    <div class="key-box" onclick="navigator.clipboard.writeText('${data.apiKey}').then(()=>{this.style.borderColor='#00ff88';setTimeout(()=>this.style.borderColor='#333',1500)})">${data.apiKey}</div>
+    <div class="copy-hint">Click to copy</div>
+    <p class="info">Save this key! It was also sent to <strong>${data.email}</strong>.<br>Use it as a Bearer token in any 402Found service:</p>
+    <div class="usage">curl -X POST https://pii-scrubber.402found.dev/mcp \\<br>&nbsp;&nbsp;-H "Authorization: Bearer ${data.apiKey}" \\<br>&nbsp;&nbsp;-H "Content-Type: application/json" \\<br>&nbsp;&nbsp;-d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"scrub_pii","arguments":{"text":"test"}},"id":1}'</div>
+    <div class="links">
+      <a href="https://402found.dev">&larr; 402Found.dev</a>
+      <a href="/">Buy More Credits</a>
+    </div>
+  `;
+}
+load();
+</script>
+</body>
+</html>

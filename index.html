@@ -133,6 +133,21 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
 .snippet .str{color:var(--green)}
 .snippet .cm{color:var(--text-dim)}
 
+/* Nav bar */
+.nav{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border:1px solid var(--accent);border-radius:6px;color:var(--accent);font-size:.85rem;font-weight:600;transition:background .2s,color .2s}
+.nav-btn:hover{background:var(--accent);color:#fff;text-decoration:none}
+
+/* API docs link on cards */
+.card-links{display:flex;align-items:center;gap:12px;margin-top:4px}
+.card-api{font-size:.7rem;font-family:monospace;color:var(--text-dim);border:1px solid var(--border);border-radius:3px;padding:1px 6px;transition:color .2s,border-color .2s}
+.card-api:hover{color:var(--accent);border-color:var(--accent);text-decoration:none}
+
+/* Footer links */
+.footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:.75rem}
+.footer-links a{color:var(--text-dim);transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+
 /* About */
 .about{padding:0 0 64px;text-align:center;max-width:600px;margin:0 auto}
 .about h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:16px}
@@ -148,6 +163,9 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
     <div class="tagline">Micro-utilities for the agent economy</div>
     <p class="intro">Discover and pay for AI agent services instantly via <strong>x402</strong>. USDC on Base. No accounts. No friction.</p>
     <div class="protocol"><span class="dot"></span> x402 protocol &middot; Base network &middot; USDC</div>
+    <div class="nav">
+      <a href="/dashboard.html" class="nav-btn">&#x1F4CA; Dashboard</a>
+    </div>
   </header>
 
   <section class="fleet">
@@ -159,7 +177,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.005/req</span>
         </div>
         <p class="card-desc">Strips PII from text. SSNs, emails, API keys, phone numbers, addresses, credit cards, IPs. GDPR/HIPAA aligned.</p>
-        <span class="card-url" onclick="copyUrl(this,'pii-scrubber.402found.dev')" title="Click to copy endpoint">pii-scrubber.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'pii-scrubber.402found.dev')" title="Click to copy endpoint">pii-scrubber.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://pii-scrubber.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -167,7 +185,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/req</span>
         </div>
         <p class="card-desc">Compresses text into LLM-optimized Reasoning Maps. Save 80%+ on context window token costs.</p>
-        <span class="card-url" onclick="copyUrl(this,'token-squeezer.402found.dev')" title="Click to copy endpoint">token-squeezer.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'token-squeezer.402found.dev')" title="Click to copy endpoint">token-squeezer.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://token-squeezer.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -175,7 +193,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.005/reset</span>
         </div>
         <p class="card-desc">Detects and breaks recursive agent loops. Bloom-filter detection, paid reset to resume.</p>
-        <span class="card-url" onclick="copyUrl(this,'loop-gate.402found.dev')" title="Click to copy endpoint">loop-gate.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'loop-gate.402found.dev')" title="Click to copy endpoint">loop-gate.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://loop-gate.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -183,7 +201,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/mo</span>
         </div>
         <p class="card-desc">Hosts agent-card.json files at permanent public URLs. Discoverable by any A2A agent.</p>
-        <span class="card-url" onclick="copyUrl(this,'card-registry.402found.dev')" title="Click to copy endpoint">card-registry.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'card-registry.402found.dev')" title="Click to copy endpoint">card-registry.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://card-registry.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -191,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.01/card</span>
         </div>
         <p class="card-desc">Generates valid A2A agent cards for any website from stable structured sources. Never scrapes.</p>
-        <span class="card-url" onclick="copyUrl(this,'the-prospector.402found.dev')" title="Click to copy endpoint">the-prospector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'the-prospector.402found.dev')" title="Click to copy endpoint">the-prospector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://the-prospector.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -199,7 +217,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/conv</span>
         </div>
         <p class="card-desc">Converts between JSON, CSV, XML, YAML, Markdown, HTML, and TOML. Nested JSON flattening. Zero external deps.</p>
-        <span class="card-url" onclick="copyUrl(this,'format-converter.402found.dev')" title="Click to copy endpoint">format-converter.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'format-converter.402found.dev')" title="Click to copy endpoint">format-converter.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://format-converter.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -207,7 +225,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.003/req</span>
         </div>
         <p class="card-desc">Scores AI output for likely hallucinated facts. Detects fabricated precision, invented citations, temporal impossibilities, and overconfident absolutes.</p>
-        <span class="card-url" onclick="copyUrl(this,'hallucination-detector.402found.dev')" title="Click to copy endpoint">hallucination-detector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'hallucination-detector.402found.dev')" title="Click to copy endpoint">hallucination-detector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://hallucination-detector.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -215,7 +233,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.002/req</span>
         </div>
         <p class="card-desc">Checks if an agent's requested action exceeds its defined scope. Detects privilege escalation and flags dangerous operations.</p>
-        <span class="card-url" onclick="copyUrl(this,'permission-guard.402found.dev')" title="Click to copy endpoint">permission-guard.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'permission-guard.402found.dev')" title="Click to copy endpoint">permission-guard.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://permission-guard.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -223,7 +241,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.003/req</span>
         </div>
         <p class="card-desc">Deep second-pass scan for sensitive data that slipped through PII scrubbing. Catches JWTs, keys, connection strings, internal IPs, and more.</p>
-        <span class="card-url" onclick="copyUrl(this,'data-sentinel.402found.dev')" title="Click to copy endpoint">data-sentinel.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'data-sentinel.402found.dev')" title="Click to copy endpoint">data-sentinel.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://data-sentinel.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -231,7 +249,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.003/req</span>
         </div>
         <p class="card-desc">Scans agent input for prompt injection attacks. Detects instruction overrides, jailbreaks, role-play manipulation, system prompt leakage, and hidden instructions.</p>
-        <span class="card-url" onclick="copyUrl(this,'prompt-injection-detector.402found.dev')" title="Click to copy endpoint">prompt-injection-detector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'prompt-injection-detector.402found.dev')" title="Click to copy endpoint">prompt-injection-detector.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://prompt-injection-detector.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -239,7 +257,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.002/req</span>
         </div>
         <p class="card-desc">Tracks cumulative agent session spend against budget ceilings. Calculates cost from token usage and API calls, returns budget status with recommendations.</p>
-        <span class="card-url" onclick="copyUrl(this,'agent-cost-meter.402found.dev')" title="Click to copy endpoint">agent-cost-meter.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'agent-cost-meter.402found.dev')" title="Click to copy endpoint">agent-cost-meter.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://agent-cost-meter.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -247,7 +265,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/log</span>
         </div>
         <p class="card-desc">Creates tamper-evident, HMAC-signed audit log entries for agent actions. Returns signed receipts the caller stores for compliance.</p>
-        <span class="card-url" onclick="copyUrl(this,'agent-audit-trail.402found.dev')" title="Click to copy endpoint">agent-audit-trail.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'agent-audit-trail.402found.dev')" title="Click to copy endpoint">agent-audit-trail.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://agent-audit-trail.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -255,7 +273,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.004/req</span>
         </div>
         <p class="card-desc">Verifies trust between agents by checking goal alignment, spend limits, and action scope. Detects goal drift and hijack attempts. OWASP ASI01 coverage.</p>
-        <span class="card-url" onclick="copyUrl(this,'trust-verifier.402found.dev')" title="Click to copy endpoint">trust-verifier.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'trust-verifier.402found.dev')" title="Click to copy endpoint">trust-verifier.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://trust-verifier.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -263,7 +281,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/req</span>
         </div>
         <p class="card-desc">Manages agent request rate limiting with sliding window and exponential backoff. Prevents rate limit errors for agents calling external APIs.</p>
-        <span class="card-url" onclick="copyUrl(this,'rate-limit-manager.402found.dev')" title="Click to copy endpoint">rate-limit-manager.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'rate-limit-manager.402found.dev')" title="Click to copy endpoint">rate-limit-manager.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://rate-limit-manager.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -271,7 +289,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.05/scan</span>
         </div>
         <p class="card-desc">Detects vibe-code anti-patterns in AI agent code before production deployment. AST-powered analysis for Python, JavaScript, and LLM prompts.</p>
-        <span class="card-url" onclick="copyUrl(this,'code-quality-scanner.402found.dev')" title="Click to copy endpoint">code-quality-scanner.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'code-quality-scanner.402found.dev')" title="Click to copy endpoint">code-quality-scanner.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://code-quality-scanner.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -279,7 +297,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.02/check</span>
         </div>
         <p class="card-desc">Prevents runaway cloud costs from AI agent usage. Enforces hard budget limits with configurable actions: throttle, pause, alert, or kill. Spend projection and webhook alerts.</p>
-        <span class="card-url" onclick="copyUrl(this,'budget-ceiling-enforcer.402found.dev')" title="Click to copy endpoint">budget-ceiling-enforcer.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'budget-ceiling-enforcer.402found.dev')" title="Click to copy endpoint">budget-ceiling-enforcer.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://budget-ceiling-enforcer.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -287,7 +305,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.001/query</span>
         </div>
         <p class="card-desc">Central inventory of all deployed AI agents. Register, query, monitor health, generate compliance reports, export CSV/JSON, and visualize dependency graphs.</p>
-        <span class="card-url" onclick="copyUrl(this,'agent-registry.402found.dev')" title="Click to copy endpoint">agent-registry.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'agent-registry.402found.dev')" title="Click to copy endpoint">agent-registry.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://agent-registry.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
       <div class="card">
         <div class="card-header">
@@ -295,7 +313,7 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
           <span class="card-status checking" title="Checking..."></span><span class="card-price">$0.10/compare</span>
         </div>
         <p class="card-desc">Captures and monitors AI agent output quality over time. Baseline snapshots, multi-metric drift detection, semantic similarity, trend analysis, and configurable sensitivity.</p>
-        <span class="card-url" onclick="copyUrl(this,'performance-baseline-tracker.402found.dev')" title="Click to copy endpoint">performance-baseline-tracker.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <div class="card-links"><span class="card-url" onclick="copyUrl(this,'performance-baseline-tracker.402found.dev')" title="Click to copy endpoint">performance-baseline-tracker.402found.dev<svg class="copy-icon" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M3 11V3h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><a class="card-api" href="https://performance-baseline-tracker.402found.dev/openapi.json" target="_blank">OpenAPI</a></div>
       </div>
     </div>
   </section>
@@ -355,6 +373,11 @@ footer{border-top:1px solid var(--border);padding:32px 0;text-align:center}
   <footer>
     <div class="wallet">0x856401af27a1D59a473a2A8BD92Af3ccAa830376</div>
     <div class="footer-note">Built on <span>Base</span> network &middot; Powered by x402 &middot; <a href="/dashboard.html">Dashboard</a> &middot; <a href="https://402found.dev">402found.dev</a></div>
+    <div class="footer-links">
+      <a href="mailto:hello@402found.dev">hello@402found.dev</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
   </footer>
 </div>
 

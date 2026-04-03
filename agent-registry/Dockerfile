@@ -5,7 +5,7 @@ COPY package*.json ./
 COPY node_modules/ ./node_modules/
 COPY tsconfig.json ./
 COPY src/ ./src/
-RUN npx tsc
+RUN node node_modules/typescript/bin/tsc
 
 FROM node:20-slim
 WORKDIR /app

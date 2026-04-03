@@ -65,7 +65,7 @@
 
 ---
 
-## Session Log — April 1-2, 2026
+## Session Log — April 1-2, 2026 (continued)
 
 ### April 1 — Website Improvements (deployed to fly.io):
 - [x] Inline SVG favicon, OG tags, JSON-LD, status dots, PII demo, code snippet, about section
@@ -84,17 +84,38 @@
 - [x] Domain mapping created: 402found.dev → four02found-site
 - [x] Cloudflare DNS updated: CNAME → ghs.googlehosted.com
 - [x] gcloud SDK installed locally (at $LOCALAPPDATA/Google/Cloud SDK/)
-- [ ] SSL cert provisioning — waiting on Google (proxy OFF in Cloudflare)
-- [ ] Turn Cloudflare proxy back ON once cert is live
+- [x] SSL cert provisioning — LIVE! (verified 2026-04-02)
+- [ ] Turn Cloudflare proxy back ON (orange cloud) — cert is live, safe to do now
+- [x] Fixed missing DNS for multi-agent-trust-verifier in Cloudflare
+- [x] Recovered code-quality-scanner source from Cloud Run build archive (committed)
+
+### April 2 — Stripe Prepaid Credits (in progress):
+- [x] Design spec written: `docs/superpowers/specs/2026-04-02-stripe-prepaid-credits-design.md`
+- [x] Implementation plan written: `docs/superpowers/plans/2026-04-02-stripe-prepaid-credits.md`
+- [x] Firestore database created (Native mode, us-east1)
+- [x] Shared `@402found/payment-gate` package built (`packages/payment-gate/`)
+- [x] All 18 services migrated to shared payment-gate package
+- [x] `credits-api` service built (Stripe Checkout + Firestore + frontend)
+- [x] pii-scrubber deployed with dual payment (x402 + Stripe credits) — VERIFIED
+- [ ] Deploy remaining 17 services (batch 1 of 4 in progress — data-sentinel, prompt-injection-detector, permission-guard, agent-audit-trail)
+- [ ] Deploy credits-api to Cloud Run — BLOCKED: Stripe account setup not complete
+- [ ] Configure Stripe webhook
+- [ ] Test end-to-end Stripe credit purchase flow
+- [ ] Update website with credits link
+- [ ] Update STATUS.md final
 
 ---
 
 ## REMAINING STEPS (Marii)
 
-### 1. Wait for SSL cert (in progress)
-Google is provisioning the cert for 402found.dev. Keep Cloudflare proxy OFF until it's live.
-Check: `curl -s -o /dev/null -w "%{http_code}" https://402found.dev/` — should return 200 when ready.
-Then turn Cloudflare proxy back ON (orange cloud).
+### 0. Set up Stripe account (BLOCKING)
+- [ ] Complete Stripe setup at stripe.com (tied to luxemarasound@gmail.com)
+- [ ] Get API keys from Dashboard > Developers > API keys
+- [ ] Need: `STRIPE_SECRET_KEY` (sk_test_... for testing, sk_live_... for production)
+- [ ] Webhook secret will come after deployment (step below)
+
+### 1. Turn on Cloudflare proxy (SSL cert is live!)
+Go to Cloudflare DNS for 402found.dev and turn the proxy ON (orange cloud) for the root domain CNAME.
 
 ### 2. Test e2e payment flow
 1. POST to any agent endpoint → should get HTTP 402 with price + wallet
@@ -131,6 +152,10 @@ Once Cloud Run is confirmed working, shut down the fly.io app to stop billing.
 | robots.txt | Search engine crawling permissions |
 | sitemap.xml | Search engine page index |
 | nginx.conf | Redirect config for .com/.io → .dev |
+| packages/payment-gate/ | Shared payment middleware — x402 + Stripe credits |
+| credits-api/ | Stripe prepaid credits service (Checkout, webhook, API keys) |
+| docs/superpowers/specs/ | Design spec for Stripe credits |
+| docs/superpowers/plans/ | Implementation plan for Stripe credits |
 
 ---
 
@@ -145,4 +170,5 @@ Once Cloud Run is confirmed working, shut down the fly.io app to stop billing.
 ---
 
 ## Blockers
-- **SSL cert for 402found.dev** — Google provisioning in progress. Cloudflare proxy must stay OFF until issued.
+- **Stripe account setup** — Marii needs to complete Stripe setup and provide API keys before credits-api can be deployed
+- **17 service deploys remaining** — batch deploys in progress, will resume next session

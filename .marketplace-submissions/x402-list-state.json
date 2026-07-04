@@ -1,0 +1,207 @@
+{
+  "directory": "x402-list.com",
+  "submit_endpoint": "https://x402-list.com/api/v1/submit",
+  "email": "support@402found.dev",
+  "website_url": "https://402found.dev",
+  "rate_limit_note": "x402-list.com allows only 1 submission per email per 7 days — submit exactly ONE pending service per run, never more.",
+  "services": [
+    {
+      "slug": "pii-scrubber",
+      "service_name": "PII Scrubber",
+      "base_url": "https://pii-scrubber.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Strips PII from text — SSNs, emails, API keys, phone numbers, addresses, credit cards, IPs. GDPR/HIPAA aligned. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "token-squeezer",
+      "service_name": "Token Squeezer",
+      "base_url": "https://token-squeezer.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Compresses text into LLM-optimized Reasoning Maps. Saves 80%+ on context window token costs. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "loop-gate",
+      "service_name": "Loop-Gate",
+      "base_url": "https://loop-gate.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Detects and breaks recursive agent loops using Bloom-filter detection, with a paid reset to resume. Pay-per-reset via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "card-registry",
+      "service_name": "Card Registry",
+      "base_url": "https://card-registry.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Hosts agent-card.json files at permanent public URLs, discoverable by any A2A agent. Pay-per-month via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "the-prospector",
+      "service_name": "The Prospector",
+      "base_url": "https://the-prospector.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Generates valid A2A agent cards for any website from stable structured sources — never scrapes. Pay-per-card via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "format-converter",
+      "service_name": "Format Converter",
+      "base_url": "https://format-converter.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Converts between JSON, CSV, XML, YAML, Markdown, HTML, and TOML, with nested JSON flattening. Pay-per-conversion via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "hallucination-detector",
+      "service_name": "Hallucination Detector",
+      "base_url": "https://hallucination-detector.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Scores AI output for likely hallucinated facts — fabricated precision, invented citations, temporal impossibilities, overconfident absolutes. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "permission-guard",
+      "service_name": "Permission Guard",
+      "base_url": "https://permission-guard.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Checks if an agent's requested action exceeds its defined scope; detects privilege escalation and flags dangerous operations. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "data-sentinel",
+      "service_name": "Data Sentinel",
+      "base_url": "https://data-sentinel.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Deep second-pass scan for sensitive data that slipped through PII scrubbing — catches JWTs, keys, connection strings, internal IPs. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "prompt-injection-detector",
+      "service_name": "Prompt Injection Detector",
+      "base_url": "https://prompt-injection-detector.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Scans agent input for prompt injection attacks — instruction overrides, jailbreaks, role-play manipulation, system prompt leakage. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "agent-cost-meter",
+      "service_name": "Agent Cost Meter",
+      "base_url": "https://agent-cost-meter.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Finance",
+      "description": "Tracks cumulative agent session spend against budget ceilings; calculates cost from token usage and API calls. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "agent-audit-trail",
+      "service_name": "Agent Audit Trail",
+      "base_url": "https://agent-audit-trail.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Other",
+      "description": "Creates tamper-evident, HMAC-signed audit log entries for agent actions, returning signed receipts for compliance. Pay-per-log via x402 (USDC on Base).",
+      "submitted": true,
+      "submission_id": "6ba61f37-eebf-4e8b-81e4-5a8d4dd032f5",
+      "submitted_at": "2026-07-04"
+    },
+    {
+      "slug": "trust-verifier",
+      "service_name": "Trust Verifier",
+      "base_url": "https://trust-verifier.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Verifies trust between agents by checking goal alignment, spend limits, and action scope. OWASP ASI01 coverage. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "rate-limit-manager",
+      "service_name": "Rate Limit Manager",
+      "base_url": "https://rate-limit-manager.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Other",
+      "description": "Manages agent request rate limiting with sliding window and exponential backoff to prevent rate limit errors. Pay-per-request via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "code-quality-scanner",
+      "service_name": "Code Quality Scanner",
+      "base_url": "https://code-quality-scanner.402found.dev",
+      "endpoint": "/scan",
+      "category": "AI",
+      "description": "Detects vibe-code anti-patterns in AI agent code before production deployment. AST-powered analysis for Python, JavaScript, and LLM prompts. Pay-per-scan via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "budget-ceiling-enforcer",
+      "service_name": "Budget Ceiling Enforcer",
+      "base_url": "https://budget-ceiling-enforcer.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Finance",
+      "description": "Prevents runaway cloud costs from AI agent usage — enforces hard budget limits with throttle, pause, alert, or kill actions. Pay-per-check via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "agent-registry",
+      "service_name": "Agent Registry",
+      "base_url": "https://agent-registry.402found.dev",
+      "endpoint": "/mcp",
+      "category": "Data",
+      "description": "Central inventory of all deployed AI agents — register, query, monitor health, generate compliance reports. Pay-per-query via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    },
+    {
+      "slug": "performance-baseline-tracker",
+      "service_name": "Performance Baseline Tracker",
+      "base_url": "https://performance-baseline-tracker.402found.dev",
+      "endpoint": "/mcp",
+      "category": "AI",
+      "description": "Captures and monitors AI agent output quality over time — baseline snapshots, drift detection, semantic similarity, trend analysis. Pay-per-comparison via x402 (USDC on Base).",
+      "submitted": false,
+      "submission_id": null,
+      "submitted_at": null
+    }
+  ]
+}

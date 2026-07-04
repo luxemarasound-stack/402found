@@ -11,10 +11,11 @@
 - **Found + fixed a real bug:** the Apr 7 commit `f6167f2` (labeled "add trust bar and social proof header") actually **deleted all 517 lines of `index.html`** — the real site only existed locally and was deployed straight to Cloudflare Pages via `wrangler`, bypassing git entirely. Restored it (`ac8e0e2`).
 - **Payment bug (why Stripe wasn't collecting):** the "AI Trust Check"/"AI Guardian" Stripe Payment Links were swapped and stale-priced vs. the site copy (Trust Check advertised $2.99 one-time, actually charged $9.99/month; Guardian advertised $9/month, actually charged $3.33 one-time). Decision: scrap that consumer Stripe section entirely — this was always meant to be agent-to-agent x402 micropayments, not a card-based human subscription. Removed from `index.html` + its CSS, pushed.
 - **Weekly automated security-check routine** created (runs Mondays 9am Central, scans all repos under the GitHub account, only reports what changed): https://claude.ai/code/routines/trig_01GkCrFyasaitG2VvPFZsYkg
+- **Deploy blocker found:** double-clicking `deploy.bat` looked like it ran but didn't actually push anything — wrangler's Cloudflare login token expired **2026-05-23** (over a month stale), so it's been silently failing auth (`Failed to fetch auth token: 400`) instead of deploying. Confirmed live site still serves old Stripe content even with cache bypassed.
 - **Next / open:**
-  1. Double-click `deploy.bat` to push the `index.html` fix live (needs your own Cloudflare login, couldn't run from this session)
+  1. Run `wrangler login` (opens a browser, re-auth with Cloudflare — has to be done by hand) then double-click `deploy.bat` again to actually push the `index.html` fix live
   2. Decide when to flip the repo to public
-  3. Firestore major-version bump for the last moderate vuln in `credits-api`/`payment-gate` — test against live Stripe/Firestore code before applying
+  3. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
   4. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
 
 ---

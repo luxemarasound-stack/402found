@@ -26,12 +26,13 @@
   1. ~~Fix the broken `/scrub` code snippet~~ ✅ done, pushed `eb338b6`
   2. ~~Run `wrangler login` + deploy~~ ✅ done — confirmed live on 402found.dev
   3. **Paused** — Cloudflare plugin OAuth (`mcp.cloudflare.com`, separate from wrangler's own login) failed 3 times total across this session (invalid-state once, generic server error twice), even after Cloudflare's status page showed a fix applied. Not worth burning more time on it right now — revisit later, then run the traffic/usage audit once it actually connects.
-  4. ➡️ **Currently deciding:** when to flip the repo to public (waiting on Marii's answer)
+  4. ~~Flip repo to public~~ ✅ done — **402found is now public.** Secret scanning + push protection auto-became available and were enabled immediately after (both were blocked on GitHub Free for private repos before this).
   5. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
-  6. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
+  6. ~~GitHub secret scanning~~ ✅ resolved by #4 — now enabled and live
   7. Longer-term: consider whether the Coinbase CDP facilitator integration (for Agentic.Market auto-listing) is worth the build effort once there's a baseline of real traffic to compare against
   8. Consider submitting to gold-402 and x402.direct too (not yet investigated) once x402-list.com queue is moving
   9. Follow up with Marii on the Cloudflare "agents stored there" thing she noticed (see reminder above)
+  10. Cloudflare plugin OAuth still paused/unresolved (item 3 above) — revisit when there's time and appetite to keep debugging it
 
 ---
 

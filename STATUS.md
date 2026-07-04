@@ -13,12 +13,19 @@
 - **Weekly automated security-check routine** created (runs Mondays 9am Central, scans all repos under the GitHub account, only reports what changed): https://claude.ai/code/routines/trig_01GkCrFyasaitG2VvPFZsYkg
 - **Deploy blocker found:** double-clicking `deploy.bat` looked like it ran but didn't actually push anything — wrangler's Cloudflare login token expired **2026-05-23** (over a month stale), so it's been silently failing auth (`Failed to fetch auth token: 400`) instead of deploying. Confirmed live site still serves old Stripe content even with cache bypassed.
 - **Monetization thread started:** Marii asked "how do we make money on this" — installed the official Cloudflare Claude Code plugin (`cloudflare@cloudflare` marketplace) to audit real traffic/usage on 402found.dev, since the core open question is whether any agents are actually discovering/calling these services, not whether the payment mechanism works. Cloudflare OAuth login (`mcp.cloudflare.com`) is currently failing — confirmed there's an **active Cloudflare incident** as of 2026-07-03 ("Network Performance in North America," Pages listed degraded) that's the likely cause. Retry the auth flow once the incident clears; this may also explain any future flaky `deploy.bat` runs beyond the expired-login issue below.
+- **Discovery diagnosis (the real "how do we make money" answer so far):** searched Smithery + the major x402 directories — **402Found is not listed on x402-list.com (86 services) or Agentic.Market/Coinbase (1,511 services)**, the two biggest agent-discovery surfaces in the x402 ecosystem. Registration "on the MCP sites" back in April (Smithery, per Marii's memory) doesn't cover x402-specific discovery at all — different ecosystem/registry. This is likely the actual reason for zero/unknown traffic: the services work, they're just invisible to agents searching where agents actually search.
+  - Checked why Agentic.Market's *automatic* Bazaar indexing won't pick us up: `packages/payment-gate` verifies `X-Payment-Tx` transactions directly/custom, not routed through Coinbase's CDP facilitator + Bazaar extension. Getting auto-listed there means a real integration project (reroute payment verification through their facilitator) — not urgent, bigger lift.
+  - **Cheap immediate win identified:** x402-list.com takes a simple form/API submission (service name, base URL, website, email, category, description, endpoint paths) — no code changes needed, our domain already qualifies (real domain, valid 402 responses). Proposed using `support@402found.dev` as contact. **Waiting on Marii's go-ahead before submitting anything publicly.**
+  - Also worth checking later: gold-402 (24K Labs curated directory) and x402.direct — not yet investigated.
 - **Next / open:**
-  1. Retry Cloudflare plugin OAuth login once the active Cloudflare incident clears, then run the traffic/usage audit to inform monetization strategy
-  2. Run `wrangler login` (opens a browser, re-auth with Cloudflare — has to be done by hand) then double-click `deploy.bat` again to actually push the `index.html` fix live
-  3. Decide when to flip the repo to public
-  4. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
-  5. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
+  1. **Get Marii's go-ahead, then submit 402Found to x402-list.com** — highest-leverage next step for actual revenue
+  2. Retry Cloudflare plugin OAuth login once the active Cloudflare incident clears, then run the traffic/usage audit to see if there's been any real usage historically
+  3. Run `wrangler login` (opens a browser, re-auth with Cloudflare — has to be done by hand) then double-click `deploy.bat` again to actually push the `index.html` fix live
+  4. Decide when to flip the repo to public
+  5. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
+  6. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
+  7. Longer-term: consider whether the Coinbase CDP facilitator integration (for Agentic.Market auto-listing) is worth the build effort once there's a baseline of real traffic to compare against
+  8. Marii wants a recurring way to track/maintain marketplace listings going forward ("I wish I kept track or knew it enough to schedule it") — worth folding into a routine similar to the weekly security check, once initial listings are sorted
 
 ---
 

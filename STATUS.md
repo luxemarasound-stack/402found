@@ -1,6 +1,21 @@
 # 402Found.dev — Project Status
 
-**Last updated:** 2026-04-07
+**Last updated:** 2026-07-03
+
+---
+
+## Session Log — July 3, 2026 (Security audit + payment bug fix)
+
+- **Dependency security:** GitHub Dependabot flagged 494 open alerts (2 critical, 84 high) — collapsed to ~12 shared vulnerable transitive packages across all 18 service dirs. Fixed via `npm audit fix`, pushed (`21d3dab`). 17/19 dirs clean; `credits-api` + `packages/payment-gate` down to 1 moderate each (needs a `@google-cloud/firestore` 7→8 major bump — not urgent, do it carefully since it's the payment code).
+- **Secrets/PII:** full sweep (current files + entire git history) came back clean. Safe to make the repo public whenever — bonus: public repos get free GitHub secret/code scanning, which isn't available on the Free plan for private repos.
+- **Found + fixed a real bug:** the Apr 7 commit `f6167f2` (labeled "add trust bar and social proof header") actually **deleted all 517 lines of `index.html`** — the real site only existed locally and was deployed straight to Cloudflare Pages via `wrangler`, bypassing git entirely. Restored it (`ac8e0e2`).
+- **Payment bug (why Stripe wasn't collecting):** the "AI Trust Check"/"AI Guardian" Stripe Payment Links were swapped and stale-priced vs. the site copy (Trust Check advertised $2.99 one-time, actually charged $9.99/month; Guardian advertised $9/month, actually charged $3.33 one-time). Decision: scrap that consumer Stripe section entirely — this was always meant to be agent-to-agent x402 micropayments, not a card-based human subscription. Removed from `index.html` + its CSS, pushed.
+- **Weekly automated security-check routine** created (runs Mondays 9am Central, scans all repos under the GitHub account, only reports what changed): https://claude.ai/code/routines/trig_01GkCrFyasaitG2VvPFZsYkg
+- **Next / open:**
+  1. Double-click `deploy.bat` to push the `index.html` fix live (needs your own Cloudflare login, couldn't run from this session)
+  2. Decide when to flip the repo to public
+  3. Firestore major-version bump for the last moderate vuln in `credits-api`/`payment-gate` — test against live Stripe/Firestore code before applying
+  4. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
 
 ---
 

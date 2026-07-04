@@ -1,6 +1,6 @@
 # 402Found.dev — Project Status
 
-**Last updated:** 2026-04-02
+**Last updated:** 2026-04-07
 
 ---
 
@@ -57,11 +57,96 @@
 | Component | Platform | Status |
 |-----------|----------|--------|
 | 18 agent services | Google Cloud Run (us-east1, luxemara-tools) | Live |
-| Website (index.html, dashboard.html) | Cloud Run (four02found-site) | Live — SSL cert pending |
+| Website (index.html, dashboard.html) | **Cloudflare Pages** (402found-dev.pages.dev) | **LIVE — 28 files deployed 2026-04-07** |
 | DNS (*.402found.dev) | Cloudflare → ghs.googlehosted.com | Live |
-| DNS (402found.dev) | Cloudflare CNAME → ghs.googlehosted.com | Live — proxy OFF until cert issued |
+| DNS (402found.dev) | **Cloudflare CNAME → 402found-dev.pages.dev** | **Live — migrated from Google/Firebase host** |
+| Stripe payments (AI Trust Check, AI Guardian) | Cloudflare Pages site | **LIVE — $3.33 one-time / $9.99/month** |
 | Redirects (.com, .io → .dev) | nginx in Cloud Run container | Live |
-| Old fly.io deployment | fly.io (402found-site) | Can be decommissioned once Cloud Run cert is live |
+| Wrangler deploy script | Local — `C:\Users\simpl\projects\402found\deploy.bat` | ✅ LIVE — double-click to deploy in ~3 sec |
+| GitHub → Cloudflare Pages CI/CD | N/A | Not set up — using wrangler CLI instead (simpler) |
+| Old fly.io deployment | fly.io (402found-site) | Can be decommissioned |
+
+---
+
+## Session Log — April 7, 2026 (Session 2)
+
+### April 7 (Session 2) — Meta Business Suite, HeyGen, Social Strategy
+
+#### ✅ Meta Business Suite — April 17 Eclipse Launch Posts Scheduled
+- Navigated Content Calendar to week of April 12–18 (Good Friday / Solar Eclipse window)
+- Scheduled TWO posts for Fri April 17:
+  - **Facebook: 7:00 AM** (peak Facebook follower time per MBS data)
+  - **Instagram: 10:00 AM** (peak Instagram follower time per MBS data)
+- Post copy: Eclipse launch caption with all 3 singles (ONE BEAT ONE LOVE, SOVEREIGN, iRECEIVE), frequencies, "link in bio"
+- SOVEREIGN artwork (600×600) attached to both posts ✅
+- ⚠️ **3 manual edits still needed before April 17:**
+  1. Remove `#GoodFriday` → replace with `#EclipseSeason2026` (Good Friday was April 3, not April 17)
+  2. Remove "is in 60622" location tag (got attached accidentally)
+  3. Add opening line at top of post body: *"The eclipse changes everything. Not just the sky — YOU. 🌑✨"*
+  - To fix: Planner → click Fri 17 block → "..." → Edit post
+
+#### ✅ Instagram Inbox Audit
+- Reviewed 4 unread Instagram comments
+- Found @cornerofcreators "Send us this 🔥" comment (4 weeks old) on the "What if the sounds you make instinctively are ancient words" post
+- Audited their account: 48.6K followers, only 8 following, AI art niche — NOT aligned with LUXEMARA audience
+- Decision: Skip. Generic feature account, likely pay-to-play. Not worth pursuing.
+- Educated on Instagram's no-native-repost mechanic and how to evaluate "send us this" comments going forward
+
+#### ✅ HeyGen — Avatar & First Video Complete
+- Avatar "Marii_J" confirmed set up: sacred geometry / golden light / meditative aesthetic ✅
+- Voice "Marii_j_voice" confirmed ✅
+- Avatar IV model confirmed ✅
+- **First test video generated successfully**
+- 🔑 Key discovery: Spell name phonetically as **"Mahdi Jay"** in scripts for correct AI pronunciation
+- $25 credits loaded
+- ⚠️ Watermark removal requires **Creator plan at $29/month** (subscription, not just credits)
+- Creator plan also unlocks: Video Agent (AI auto-generates script + video from prompt), unlimited videos, 1080p, brand kit
+
+#### 📋 HeyGen Content Pipeline (queued — 5 videos to batch-generate)
+1. "What is 432Hz?" — evergreen education
+2. SOVEREIGN origin story
+3. iRECEIVE intro — "for when you're blocked"
+4. April 17 eclipse teaser
+5. "Why I don't make normal music" — brand origin
+
+#### 🤖 Automation Path Identified (for future build)
+- **Video Agent**: prompt → full script + video, no manual scripting needed
+- **HeyGen API** → Make.com → trigger video generation from spreadsheet/Notion entry
+- Goal: zero-spoon content pipeline — update a doc, avatar video posts itself
+
+---
+
+### April 7 — Wrangler Deploy Pipeline COMPLETE:
+- [x] Installed wrangler globally: `npm install -g wrangler`
+- [x] Authenticated: `wrangler login` → confirmed `luxemarasound@gmail.com`
+- [x] Created `.pagesignore` to exclude backend/source files from deploys
+- [x] **Test deploy succeeded** — 377 files, 2.83 sec, live at `402found.dev`
+- [x] Deploy workflow: open terminal in `C:\Users\simpl\projects\402found` → double-click `deploy.bat` → done
+
+**🚀 HOW TO DEPLOY SITE UPDATES (memorize this):**
+1. Edit any file in `C:\Users\simpl\projects\402found` (usually `index.html`)
+2. Double-click `deploy.bat` (or run it in terminal)
+3. Wait ~3 seconds
+4. `402found.dev` is live with your changes ✅
+
+**If wrangler ever stops working** (new machine, token expired):
+```
+npm install -g wrangler
+wrangler login
+```
+Then deploy normally. One-time fix.
+
+---
+
+### April 7 — Cloudflare Pages Migration & Stripe Launch:
+- [x] Migrated website hosting from Cloud Run → **Cloudflare Pages** (direct upload, 28 files deployed)
+- [x] 402found.dev is now **LIVE on Cloudflare Pages** at 402found-dev.pages.dev
+- [x] DNS updated — Cloudflare CNAME now points to `402found-dev.pages.dev` (was pointing to old Google/Firebase host `ghs.googlehosted.com`)
+- [x] **Stripe payment section is LIVE** with correct prices:
+  - AI Trust Check: **$3.33 one-time**
+  - AI Guardian: **$9.99/month**
+- [ ] Wrangler deploy script setup in progress (for easy future deployments without manual upload)
+- [ ] GitHub → Cloudflare Pages connection NOT set up — Cloudflare limitation on existing projects; using direct deploy workflow instead
 
 ---
 
@@ -114,8 +199,11 @@
 - [ ] Need: `STRIPE_SECRET_KEY` (sk_test_... for testing, sk_live_... for production)
 - [ ] Webhook secret will come after deployment (step below)
 
-### 1. Turn on Cloudflare proxy (SSL cert is live!)
-Go to Cloudflare DNS for 402found.dev and turn the proxy ON (orange cloud) for the root domain CNAME.
+### 1. Finish Wrangler deploy script setup
+So future site updates can be pushed with a single command instead of manual upload via Cloudflare dashboard.
+
+### 2. Verify DNS propagation for 402found.dev → Cloudflare Pages
+Confirm the CNAME to `402found-dev.pages.dev` is resolving correctly everywhere. DNS changes can take up to 24-48h to fully propagate.
 
 ### 2. Test e2e payment flow
 1. POST to any agent endpoint → should get HTTP 402 with price + wallet
@@ -170,5 +258,8 @@ Once Cloud Run is confirmed working, shut down the fly.io app to stop billing.
 ---
 
 ## Blockers
-- **Stripe account setup** — Marii needs to complete Stripe setup and provide API keys before credits-api can be deployed
+- **Stripe credits-api deploy** — Still blocked on completing Stripe account setup (API keys needed) before credits-api can go to Cloud Run
 - **17 service deploys remaining** — batch deploys in progress, will resume next session
+- ~~**Wrangler deploy script**~~ — ✅ RESOLVED 2026-04-07: `deploy.bat` works, authenticated, test deploy confirmed
+- ~~**Website hosting migration**~~ — ✅ RESOLVED 2026-04-07: Cloudflare Pages is live
+- ~~**Stripe pricing on site**~~ — ✅ RESOLVED 2026-04-07: AI Trust Check $3.33 / AI Guardian $9.99/month live

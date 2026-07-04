@@ -20,15 +20,18 @@
 - **Submitted to x402-list.com:** Marii approved, submitted all 18 services. Only **`agent-audit-trail` went through** (HTTP 201, pending review, submission_id `6ba61f37-eebf-4e8b-81e4-5a8d4dd032f5`) — x402-list.com enforces **1 submission per email per 7 days**, so the other 17 got HTTP 429. Tracking state committed at `.marketplace-submissions/x402-list-state.json`. Set up a **weekly auto-submit routine** (Wednesdays 10am Central, submits the next pending service, verifies the endpoint is alive first, updates + pushes the state file automatically): https://claude.ai/code/routines/trig_01Gr65Hm3A61nQcc6jnMjGeG — all 18 done by ~mid-October at this rate.
 - **Found + fixed the conversion-killer bug:** the website's own "Integrate in 30 Seconds" code snippet advertised `POST /scrub` on pii-scrubber — **that endpoint doesn't exist, returns 404.** Real, correctly-implemented, x402-spec-compliant endpoint is `POST /mcp` (MCP/JSON-RPC body + `X-Payment-Tx` header). Fixed the snippet to show the real working example, pushed (`eb338b6`). Backend was always fine — only the marketing copy was wrong.
 - Marii is multitasking for the LUXEMARA album release — working the open items in order, one at a time, low-key pace.
+- **Marii ran `wrangler login` herself (fresh token, expires 2026-07-04T17:31Z) and `deploy.bat` — deploy succeeded** (521 files, https://03ecade1.402found-dev.pages.dev, promoted to production). **Confirmed live on 402found.dev:** no Stripe section, no broken snippet, correct `/mcp` example all showing. Items #1 and #3 both done.
+- **Reminder for later (Marii flagged this, don't forget):** while logging into Cloudflare she noticed something about being able to "have agents stored there" — likely Cloudflare's Agents SDK / Durable Objects platform (the newly-installed Cloudflare plugin has `agents-sdk` and `build-agent` skills for exactly this). Worth a dedicated conversation later — not yet explored.
 - **Next / open (in order):**
   1. ~~Fix the broken `/scrub` code snippet~~ ✅ done, pushed `eb338b6`
-  2. Retry Cloudflare plugin OAuth login (tried again — Cloudflare status still shows degraded/monitoring as of this check; sent Marii a fresh link, waiting on her to try it) then run the traffic/usage audit to see if there's been any real usage historically
-  3. Run `wrangler login` (opens a browser, re-auth with Cloudflare — has to be done by hand) then double-click `deploy.bat` — this one deploy now covers 3 fixes at once: index.html restore, Stripe section removal, and the snippet fix
+  2. ~~Run `wrangler login` + deploy~~ ✅ done — confirmed live on 402found.dev
+  3. Retry Cloudflare **plugin** OAuth login (separate from wrangler's own login — `mcp.cloudflare.com` still shows unauthenticated) once the Cloudflare incident fully clears, then run the traffic/usage audit to see if there's been any real usage historically
   4. Decide when to flip the repo to public
   5. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
   6. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
   7. Longer-term: consider whether the Coinbase CDP facilitator integration (for Agentic.Market auto-listing) is worth the build effort once there's a baseline of real traffic to compare against
   8. Consider submitting to gold-402 and x402.direct too (not yet investigated) once x402-list.com queue is moving
+  9. Follow up with Marii on the Cloudflare "agents stored there" thing she noticed (see reminder above)
 
 ---
 

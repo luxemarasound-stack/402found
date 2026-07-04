@@ -25,8 +25,8 @@
 - **Next / open (in order):**
   1. ~~Fix the broken `/scrub` code snippet~~ ✅ done, pushed `eb338b6`
   2. ~~Run `wrangler login` + deploy~~ ✅ done — confirmed live on 402found.dev
-  3. Retry Cloudflare **plugin** OAuth login (separate from wrangler's own login — `mcp.cloudflare.com` still shows unauthenticated) once the Cloudflare incident fully clears, then run the traffic/usage audit to see if there's been any real usage historically
-  4. Decide when to flip the repo to public
+  3. **Paused** — Cloudflare plugin OAuth (`mcp.cloudflare.com`, separate from wrangler's own login) failed 3 times total across this session (invalid-state once, generic server error twice), even after Cloudflare's status page showed a fix applied. Not worth burning more time on it right now — revisit later, then run the traffic/usage audit once it actually connects.
+  4. ➡️ **Currently deciding:** when to flip the repo to public (waiting on Marii's answer)
   5. Firestore major-version bump for the last moderate vuln in `credits-api`/`packages/payment-gate` — test against live Stripe/Firestore code before applying
   6. GitHub secret scanning still not enabled (blocked on GitHub Free plan limits for private repos — resolves itself if repo goes public)
   7. Longer-term: consider whether the Coinbase CDP facilitator integration (for Agentic.Market auto-listing) is worth the build effort once there's a baseline of real traffic to compare against

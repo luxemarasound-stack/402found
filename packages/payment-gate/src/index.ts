@@ -67,10 +67,6 @@ export function createPaymentGate(config: PaymentGateConfig) {
     res.status(402).json({
       x402Version: 1,
       accepts: [getPaymentRequirement(config)],
-      stripe: {
-        buyCredits: CREDITS_URL,
-        docs: "Send Authorization: Bearer sk_live_... header",
-      },
       error: "Payment Required",
     });
   };
@@ -148,10 +144,6 @@ export async function verifyRequest(
     body: {
       x402Version: 1,
       accepts: [getPaymentRequirement(config)],
-      stripe: {
-        buyCredits: CREDITS_URL,
-        docs: "Send Authorization: Bearer sk_live_... header",
-      },
       error: "Payment Required",
     },
   };

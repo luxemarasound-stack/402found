@@ -4,6 +4,17 @@
 
 ---
 
+## Session Log — July 5, 2026 (latest — trust fix #3: cleanup, ALL THREE FIXES DONE)
+
+- **Deleted after inspection:** `ziSk5tII` (zip of old sitemap), `deploy.zip` (stale site snapshot), `Downloads - Shortcut.lnk`, `X402found/` (1-line import stub).
+- **Kept on purpose:** `402_MD/` (contains the original March 2026 founding spec `PROJECT_402_Foundv1.4.md`), `Claudecodemd.odt` (early "Vibe Coding Protocol" draft — origin-story document), root `AGENTS.md`/`CLAUDE.md` (working instructions with personal context — must NOT be published).
+- **Gitignored all kept personal files** so they can't accidentally land in the now-public repo (`22e9938`, pushed).
+- **Stash dropped** after verifying its only unique line was a stale date stamp — everything else already in committed files.
+- **Left alone:** `fix/firestore-uuid-override` branch (fully merged, git-guard hook misfires even on safe `-d` delete — its regex is case-blind; harmless leftover), `code-quality-scanner/fly.toml` (evidence for the fly.io decommission check, still pending).
+- **Trust list COMPLETE: #1 dead payment door ✅ / #2 site-repo divergence ✅ / #3 cleanup ✅.** What remains is growth work: gold-402 + x402.direct listings, dashboard link on homepage, Search Console, fly.io billing check, and (big, later) Coinbase CDP facilitator for Agentic.Market.
+
+---
+
 ## Session Log — July 5, 2026 (later — fixing trust gap #1 + #2)
 
 - **Trust fix #1 in progress — dead payment door removal:** stripped the `stripe: {buyCredits: credits-api...}` block from both 402 builders in `packages/payment-gate/src/index.ts`, rebuilt clean (buyCredits gone from dist), committed + pushed (`e8771fb`). Left the internal credit-check path untouched (unreachable without keys, minimal-impact rule on payment code).

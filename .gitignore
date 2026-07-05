@@ -7,3 +7,10 @@ dist/
 *.tsbuildinfo
 deploy-env-vars.sh
 LAUNCH-POSTS.md
+
+# Personal/local-only files — never publish (repo is public)
+402_MD/
+Claudecodemd.odt
+AGENTS.md
+CLAUDE.md
+*.lnk

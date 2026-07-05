@@ -1,6 +1,41 @@
 # 402Found.dev — Project Status
 
-**Last updated:** 2026-07-03
+**Last updated:** 2026-07-05
+
+---
+
+## Session Log — July 5, 2026 (later — fixing trust gap #1 + #2)
+
+- **Trust fix #1 in progress — dead payment door removal:** stripped the `stripe: {buyCredits: credits-api...}` block from both 402 builders in `packages/payment-gate/src/index.ts`, rebuilt clean (buyCredits gone from dist), committed + pushed (`e8771fb`). Left the internal credit-check path untouched (unreachable without keys, minimal-impact rule on payment code).
+- **pii-scrubber redeployed first as the test case — verified live:** its 402 response no longer contains the stripe block, x402 accepts intact.
+- **✅ TRUST FIX #1 COMPLETE — all 18 services redeployed and verified.** Batch finished clean (all 17 printed Service URLs, exit 0). Final outside-in sweep: all 18 public endpoints answer 402 with x402 `accepts` present and NO `stripe` key. The marketplace no longer advertises a payment method that doesn't exist.
+- **Trust fix #2 DONE:** committed `privacy.html`, `terms.html`, `.pagesignore`, `deploy.bat`, `deploy.ps1` to the public repo (`ea9097f`) after verifying no secrets in any of them. Deployed site and git no longer diverge on these.
+- **ziSk5tII identified:** just a zip containing an old sitemap.xml — junk, safe to delete in the cleanup pass (fix #3, not yet done).
+
+---
+
+## Session Log — July 5, 2026 (Public-trust audit — outside-in check of the live product)
+
+Tested everything the way a stranger (or a paying agent) would hit it. Results:
+
+**Healthy ✅**
+- Homepage, /privacy, /terms, /dashboard, /.well-known/agent-card.json — all 200 on 402found.dev
+- **Fleet is 18/18 alive.** 17 agents answer `POST /mcp` with spec-correct x402 402 responses; `code-quality-scanner` uses `POST /scan` instead (it documents this correctly at its root URL — route inconsistency, not a breakage)
+- support@402found.dev can receive mail (Cloudflare Email Routing MX records live)
+- Repo public, secret scanning on, 0 known vulns as of 7/03
+
+**Trust gaps found ⚠️ (in priority order)**
+1. **Every 402 response advertises a dead payment door:** `"stripe": {"buyCredits": "https://credits-api.402found.dev/"}` — that URL doesn't resolve (credits-api was never deployed; consumer-Stripe pivot was scrapped 7/03). Hardcoded in `packages/payment-gate/src/index.ts` (`CREDITS_URL`). Fix = strip the stripe block from payment-gate's 402 builder + rebuild + redeploy all 18 services (see Docker deploy quirk notes). #1 credibility issue: the product's core handshake promises a payment method that doesn't exist.
+2. **Deployed site ≠ git repo, again:** `privacy.html`, `terms.html`, `.pagesignore`, deploy scripts are live on the site but untracked in git — the exact failure mode behind the April index.html loss. Commit the site files (check deploy scripts for secrets first — repo is public now).
+3. **Repo-root clutter:** `ziSk5tII`, `deploy.zip`, `Downloads - Shortcut.lnk`, `Claudecodemd.odt` untracked junk; old stash `marii-wip-holding-for-security-push` still parked (its conflict era is resolved — peek then drop).
+
+**Growth levers (ranked by lift-to-payoff)**
+- Weekly x402-list.com auto-submit routine already running (all 18 by ~mid-Oct)
+- gold-402 + x402.direct directories — uninvestigated, likely cheap listings
+- Link /dashboard prominently from homepage as a public status/trust signal
+- Google Search Console submission — April item, still unconfirmed
+- fly.io decommission — confirm it isn't still billing
+- Big lift, later: Coinbase CDP facilitator integration → Agentic.Market auto-listing (1,511-service directory)
 
 ---
 

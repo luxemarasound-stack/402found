@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — 402Found</title>
+<meta name="description" content="Privacy Policy for 402Found micropayment AI agent services.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%230a0a0a'/><text x='50' y='68' font-family='monospace' font-size='42' font-weight='bold' fill='%233b82f6' text-anchor='middle'>402</text></svg>">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--surface:#111;--border:#1a1a1a;
+  --text:#e0e0e0;--text-dim:#777;--text-bright:#fff;
+  --accent:#3b82f6;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+.back{font-size:.85rem;color:var(--text-dim);margin-bottom:40px;display:inline-block}
+.back:hover{color:var(--accent)}
+h1{font-size:2rem;font-weight:700;color:var(--text-bright);margin-bottom:8px}
+.meta{font-size:.8rem;color:var(--text-dim);margin-bottom:48px;font-family:monospace}
+h2{font-size:1rem;font-weight:700;color:var(--text-bright);margin:36px 0 10px;text-transform:uppercase;letter-spacing:.5px}
+p{font-size:.9rem;color:var(--text);margin-bottom:14px;line-height:1.75}
+ul{font-size:.9rem;color:var(--text);margin:10px 0 14px 20px;line-height:1.75}
+li{margin-bottom:6px}
+.highlight{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:6px;padding:14px 18px;margin:20px 0;font-size:.875rem}
+footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;font-size:.75rem;color:var(--text-dim);margin-top:64px}
+footer a{color:var(--text-dim)}
+footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back">← Back to 402Found</a>
+  <h1>Privacy Policy</h1>
+  <div class="meta">Effective date: April 1, 2025 &nbsp;·&nbsp; Last updated: April 1, 2025</div>
+
+  <div class="highlight">
+    <strong>Short version:</strong> We process your API request data transiently to deliver the service. We do not sell your data. We do not store request payloads beyond the request lifecycle. Subscription billing is handled by Stripe.
+  </div>
+
+  <p>This Privacy Policy describes how 402Found ("we," "us," or "our") collects, uses, and shares information when you visit 402found.dev or use our API services. We are committed to handling your information with care and transparency.</p>
+
+  <h2>1. Information We Collect</h2>
+  <p><strong>API Request Data:</strong> When you call a 402Found agent endpoint, the request payload (e.g., text submitted to the PII Scrubber) is processed in memory to generate a response. We do not persist this payload to disk or database storage beyond the duration of the request unless a specific service feature requires it (which will be clearly documented in that service's API spec).</p>
+  <p><strong>Technical Logs:</strong> Our infrastructure automatically logs standard server data including: IP addresses, request timestamps, HTTP methods, endpoint paths, response codes, and response times. These logs are used for uptime monitoring, rate limiting, abuse prevention, and debugging. Log retention is limited to 30 days.</p>
+  <p><strong>Billing Information:</strong> Consumer subscription and one-time payment processing is handled entirely by Stripe. We do not receive or store your full credit card number. We receive a Stripe customer ID and subscription status to manage your access.</p>
+  <p><strong>On-Chain Transactions:</strong> x402 micropayments are processed on the Base blockchain. Transaction hashes and wallet addresses associated with payments are publicly visible on-chain. We record transaction hashes to validate payment and fulfill service requests.</p>
+  <p><strong>Website Analytics:</strong> We may collect anonymized, aggregated website usage data (page views, referrer information) to understand how people use the site. No personally identifiable information is used for analytics purposes.</p>
+
+  <h2>2. How We Use Your Information</h2>
+  <ul>
+    <li>To provide and improve our services</li>
+    <li>To process and verify payments (on-chain and via Stripe)</li>
+    <li>To monitor service health, uptime, and performance</li>
+    <li>To detect and prevent abuse, fraud, and unauthorized access</li>
+    <li>To communicate with you about your account or service changes (if you have provided contact information)</li>
+    <li>To comply with legal obligations</li>
+  </ul>
+
+  <h2>3. Data Sharing and Disclosure</h2>
+  <p>We do not sell, rent, or trade your personal information to third parties. We may share information in the following limited circumstances:</p>
+  <ul>
+    <li><strong>Service Providers:</strong> We use Stripe for payment processing and Google Cloud Run for infrastructure. These providers process data under their own privacy policies and are contractually bound to protect your data.</li>
+    <li><strong>Legal Requirements:</strong> We may disclose information if required to do so by law or in response to valid legal process (e.g., a court order or subpoena).</li>
+    <li><strong>Protection of Rights:</strong> We may disclose information to protect the rights, property, or safety of 402Found, our users, or the public.</li>
+    <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, user information may be transferred as part of that transaction.</li>
+  </ul>
+
+  <h2>4. Data Retention</h2>
+  <p>Request payload data is not retained beyond the request lifecycle. Server access logs are retained for up to 30 days. Billing records (subscription status, payment history) are retained as required by financial regulations and Stripe's data policies. You may request deletion of any personal information we hold about you by contacting us at <a href="mailto:support@402found.dev">support@402found.dev</a>.</p>
+
+  <h2>5. Cookies and Tracking</h2>
+  <p>402found.dev does not use advertising trackers or third-party analytics cookies. We may use minimal session-related cookies required for functionality (e.g., maintaining login state for dashboard access). We do not use cookies for behavioral advertising or cross-site tracking.</p>
+
+  <h2>6. Security</h2>
+  <p>We implement industry-standard security practices including HTTPS/TLS encryption in transit, access controls on infrastructure, and regular security reviews. However, no system is completely secure. We cannot guarantee absolute security of your data transmitted over the internet.</p>
+
+  <h2>7. Children's Privacy</h2>
+  <p>Our services are not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+
+  <h2>8. Your Rights</h2>
+  <p>Depending on your jurisdiction, you may have rights regarding your personal information, including the right to access, correct, delete, or restrict processing of your data. To exercise any of these rights, contact us at <a href="mailto:support@402found.dev">support@402found.dev</a>. We will respond within 30 days.</p>
+  <p>If you are located in the European Economic Area (EEA) or United Kingdom, you may have additional rights under GDPR/UK GDPR, including the right to data portability and the right to lodge a complaint with a supervisory authority.</p>
+
+  <h2>9. Third-Party Links</h2>
+  <p>Our site may contain links to third-party websites (e.g., x402.org, Base network resources). This Privacy Policy does not apply to those sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+
+  <h2>10. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. We will post any changes on this page with an updated effective date. Your continued use of our services after any changes constitutes your acceptance of the updated policy.</p>
+
+  <h2>11. Contact</h2>
+  <p>If you have questions or concerns about this Privacy Policy or our data practices, please contact us at:</p>
+  <p><a href="mailto:support@402found.dev">support@402found.dev</a><br>402Found · 402found.dev</p>
+</div>
+
+<footer>
+  <a href="/">402found.dev</a> &nbsp;·&nbsp;
+  <a href="/terms.html">Terms of Service</a> &nbsp;·&nbsp;
+  <a href="mailto:support@402found.dev">support@402found.dev</a>
+</footer>
+</body>
+</html>

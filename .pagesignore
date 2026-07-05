@@ -1,0 +1,50 @@
+# Cloudflare Pages deploy ignore file
+# Only static web files get uploaded - all backend/source code excluded
+
+# Agent service directories
+agent-audit-trail/
+agent-cost-meter/
+agent-registry/
+budget-ceiling-enforcer/
+card-registry/
+code-quality-scanner/
+credits-api/
+data-sentinel/
+format-converter/
+hallucination-detector/
+loop-gate/
+multi-agent-trust-verifier/
+performance-baseline-tracker/
+permission-guard/
+pii-scrubber/
+prompt-injection-detector/
+rate-limit-manager/
+the-prospector/
+token-squeezer/
+ziSk5tII/
+
+# Node packages and backend
+packages/
+node_modules/
+
+# Docs and config
+docs/
+nginx.conf
+Dockerfile
+fly.toml
+
+# Deploy scripts and secrets
+deploy.bat
+deploy.ps1
+deploy.zip
+deploy-env-vars.sh
+
+# Docs / spreadsheets / notes
+*.xlsx
+*.docx
+*.md
+LAUNCH-POSTS.md
+PROJECT_RULES.md
+README.md
+STATUS.md
+WEBSITE-IMPROVEMENTS.md

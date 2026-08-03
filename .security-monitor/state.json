@@ -3,11 +3,18 @@
     "402found": {
       "private": false,
       "pushed_at": "2026-07-05T23:26:09Z",
-      "dependabot": null,
+      "dependabot": {
+        "critical": 0,
+        "high": 17,
+        "medium": 19,
+        "low": 18,
+        "alert_keys": [],
+        "source": "git push remote advisory message (severity totals only, no per-alert GHSA ids available without Dependabot alerts API access)"
+      },
       "secret_scanning_enabled": null,
       "push_protection_enabled": null,
       "code_scanning_enabled": null,
-      "vulnerability_alerts_enabled": null
+      "vulnerability_alerts_enabled": true
     },
     "nicslawn": {
       "private": true,

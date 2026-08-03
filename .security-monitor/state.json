@@ -1,0 +1,42 @@
+{
+  "repos": {
+    "402found": {
+      "private": false,
+      "pushed_at": "2026-07-05T23:26:09Z",
+      "dependabot": null,
+      "secret_scanning_enabled": null,
+      "push_protection_enabled": null,
+      "code_scanning_enabled": null,
+      "vulnerability_alerts_enabled": null
+    },
+    "nicslawn": {
+      "private": true,
+      "pushed_at": "2026-03-23T20:40:50Z",
+      "dependabot": null,
+      "secret_scanning_enabled": null,
+      "push_protection_enabled": null,
+      "code_scanning_enabled": null,
+      "vulnerability_alerts_enabled": null
+    },
+    "luxemara": {
+      "private": true,
+      "pushed_at": "2026-07-04T03:39:38Z",
+      "dependabot": null,
+      "secret_scanning_enabled": null,
+      "push_protection_enabled": null,
+      "code_scanning_enabled": null,
+      "vulnerability_alerts_enabled": null
+    },
+    "scoop": {
+      "private": false,
+      "pushed_at": "2026-06-13T14:57:09Z",
+      "dependabot": null,
+      "secret_scanning_enabled": null,
+      "push_protection_enabled": null,
+      "code_scanning_enabled": null,
+      "vulnerability_alerts_enabled": null
+    }
+  },
+  "last_run": "2026-08-03T00:00:00Z",
+  "last_run_status": "incomplete: repo discovery only. This session has no gh CLI, no raw GitHub API access, and the connected GitHub MCP server exposes no tools for Dependabot alerts, repo security_and_analysis settings, the vulnerability-alerts toggle, or code-scanning alerts. Those fields are null (unchecked), not verified-clean. Fix: give this session's environment gh CLI access, or connect a GitHub MCP server/tool that covers those endpoints, before this monitor can actually check security posture."
+}

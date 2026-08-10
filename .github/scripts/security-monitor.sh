@@ -136,8 +136,20 @@ for repo in $repo_names; do
 
   # --- STEP 4: diff against last week (skip entirely on first run) ---
   if [[ "$first_run" != "true" && "$prior_repo" != "null" ]]; then
-    prior_keys=$(jq -c '.dependabot.alert_keys // []' <<<"$prior_repo")
-    cur_keys=$(jq -c '.dependabot.alert_keys // []' <<<"$dependabot_json")
+    # `prior_repo` is the whole repo record (so .dependabot.alert_keys is right),
+    # but `dependabot_json` IS the dependabot value itself — already one level in.
+    # It can also be a bare JSON string ("disabled"/"null" rather than an object),
+    # which .alert_keys can't be applied to at all (indexing a string errors,
+    # it doesn't just return null) — this was crashing on any "disabled" repo,
+    # and silently always returning [] for real ones the rest of the time,
+    # since ".dependabot" doesn't exist as a field on an already-unwrapped object.
+    # same guard as cur_keys below: prior_repo.dependabot can itself be the
+    # bare string "disabled"/"null" (not nested inside another object), and
+    # `.dependabot.alert_keys` errors outright on that — `// []` only catches
+    # null/false, not a genuine indexing-a-string error, so this would crash
+    # again next week the first time a repo's *prior* value was "disabled".
+    prior_keys=$(jq -c '(.dependabot // {}) | if type == "object" then (.alert_keys // []) else [] end' <<<"$prior_repo")
+    cur_keys=$(jq -c 'if type == "object" then (.alert_keys // []) else [] end' <<<"$dependabot_json")
     new_keys=$(jq -c -n --argjson a "$cur_keys" --argjson b "$prior_keys" '$a - $b')
     new_count=$(jq 'length' <<<"$new_keys")
     if [[ "$new_count" -gt 0 ]]; then

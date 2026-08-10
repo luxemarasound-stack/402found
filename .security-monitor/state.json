@@ -3,7 +3,14 @@
     "402found": {
       "private": false,
       "pushed_at": "2026-08-03T14:45:39Z",
-      "dependabot": null,
+      "dependabot": {
+        "critical": 0,
+        "high": 17,
+        "medium": 87,
+        "low": 18,
+        "alert_keys": [],
+        "source": "git push remote advisory message (severity totals only, no per-alert GHSA ids available without Dependabot alerts API access)"
+      },
       "secret_scanning_enabled": null,
       "push_protection_enabled": null,
       "code_scanning_enabled": null,
@@ -38,5 +45,5 @@
     }
   },
   "last_run": "2026-08-10T00:00:00Z",
-  "last_run_status": "BLOCKED (2nd consecutive week): this session still has no gh CLI, and the GitHub token/MCP tools available to it lack permission for every security endpoint needed. Verified this run: repos/{owner}/{repo}/dependabot/alerts -> 403 'Resource not accessible by integration'; repos/{owner}/{repo}/code-scanning/alerts -> 403 same; repos/{owner}/{repo}/vulnerability-alerts -> 403; repos/{owner}/{repo} security_and_analysis field -> null; repos/{owner}/{repo}/secret-scanning/alerts -> blocked by proxy entirely ('not permitted through this proxy'); /search/code -> blocked by proxy (org/global search paths not allowed, only repo-scoped REST paths). All security fields below are null (UNCHECKED), not verified-clean. This has now failed two runs in a row with the same root cause. Fix needed: grant the Claude GitHub App installation the Dependabot alerts (read), Code scanning alerts (read), and Secret scanning alerts (read) repository permissions in GitHub App settings, or provide this environment a PAT/gh-CLI auth with security_events + repo scope."
+  "last_run_status": "BLOCKED (2nd consecutive week): this session still has no gh CLI, and the GitHub token/MCP tools available to it lack permission for every security endpoint needed. Verified this run: repos/{owner}/{repo}/dependabot/alerts -> 403 'Resource not accessible by integration'; repos/{owner}/{repo}/code-scanning/alerts -> 403 same; repos/{owner}/{repo}/vulnerability-alerts -> 403; repos/{owner}/{repo} security_and_analysis field -> null; repos/{owner}/{repo}/secret-scanning/alerts -> blocked by proxy entirely ('not permitted through this proxy'); /search/code -> blocked by proxy (org/global search paths not allowed, only repo-scoped REST paths). All security fields below are null (UNCHECKED), not verified-clean, except 402found's dependabot severity totals which came incidentally from this run's own git push remote advisory text (no per-alert detail, and this trick only works for the one repo this checkout can push to). This has now failed two runs in a row with the same root cause. Fix needed: grant the Claude GitHub App installation the Dependabot alerts (read), Code scanning alerts (read), and Secret scanning alerts (read) repository permissions in GitHub App settings, or provide this environment a PAT/gh-CLI auth with security_events + repo scope."
 }

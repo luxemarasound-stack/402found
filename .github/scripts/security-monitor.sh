@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
 STATE_FILE=".security-monitor/state.json"
 WORKDIR=$(mktemp -d)
@@ -37,10 +37,15 @@ for repo in $repo_names; do
 
   # --- Dependabot alerts ---
   dependabot_json="null"
-  alerts='[]'  # kept defined even on failure/disabled — read later under `set -u`
-  if alerts=$(GH_TOKEN="$SECURITY_TOKEN" gh api --paginate \
-      "repos/$OWNER/$repo/dependabot/alerts" --jq '[.[] | select(.state=="open")]' \
-      2>"$WORKDIR/err"); then
+  # `alerts` = every OPEN alert, always a valid JSON array — read later under `set -u`.
+  # No --jq on the paginated fetch: gh api auto-merges multi-page array responses into
+  # one array only when --jq isn't used; a per-page --jq '[...]' filter (the earlier bug)
+  # instead concatenates one array PER PAGE, which breaks on any repo with enough alerts
+  # to span pages (this bit 402found at 122 open alerts, several pages).
+  alerts='[]'
+  if raw=$(GH_TOKEN="$SECURITY_TOKEN" gh api --paginate \
+      "repos/$OWNER/$repo/dependabot/alerts" 2>"$WORKDIR/err"); then
+    alerts=$(jq '[.[] | select(.state=="open")]' <<<"$raw")
     counts=$(jq 'reduce .[] as $a ({critical:0,high:0,medium:0,low:0,unknown:0};
               ($a.security_advisory.severity) as $s |
               if $s=="critical" then .critical+=1
@@ -51,7 +56,10 @@ for repo in $repo_names; do
     keys=$(jq '[.[] | (.security_advisory.ghsa_id + "|" + (.dependency.manifest_path // "unknown"))]' <<<"$alerts")
     dependabot_json=$(jq -n --argjson c "$counts" --argjson k "$keys" \
       '{critical:$c.critical, high:$c.high, medium:$c.medium, low:$c.low, alert_keys:$k}')
-  elif grep -q "HTTP 404" "$WORKDIR/err"; then
+  elif grep -qi "disabled for this repository\|HTTP 404\|not enabled" "$WORKDIR/err"; then
+    # GitHub returns this for "Dependabot alerts turned off", which isn't a 404 —
+    # matching only "HTTP 404" (as STEP 3 originally assumed) missed this case,
+    # so it was falling into the real-error branch below instead.
     dependabot_json='"disabled"'
     alerts='[]'
   else

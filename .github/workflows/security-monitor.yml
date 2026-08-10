@@ -34,7 +34,18 @@ jobs:
             git config user.email "actions@users.noreply.github.com"
             git add .security-monitor/state.json
             git commit -m "chore: weekly security monitor snapshot"
-            git push
+            # main can move between this job's checkout and this push (e.g. a
+            # manual re-run, or another push landing mid-run) — rebase onto
+            # whatever's current before retrying once, instead of failing outright.
+            for attempt in 1 2; do
+              if git push; then
+                break
+              elif [[ "$attempt" -eq 2 ]]; then
+                echo "::error::push failed twice, giving up" && exit 1
+              fi
+              git fetch origin main
+              git rebase origin/main
+            done
           else
             echo "No state changes to commit."
           fi

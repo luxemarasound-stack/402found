@@ -225,10 +225,15 @@ cat "$WORKDIR/report.md" >> "${GITHUB_STEP_SUMMARY:-/dev/stdout}"
 # even on a first run — e.g. a broken token should be visible immediately,
 # not hidden behind "baseline established".
 if [[ "$n_findings" -gt 0 ]]; then
-  GH_TOKEN="$GITHUB_TOKEN" gh issue create \
-    --repo "$OWNER/402found" \
-    --title "Security monitor: $n_findings finding(s) — $(date -u +%Y-%m-%d)" \
-    --label "security-monitor" \
-    --body-file "$WORKDIR/report.md" || \
-    echo "WARN: could not create issue (label 'security-monitor' may not exist yet — create it once, or drop --label)." >&2
+  issue_title="Security monitor: $n_findings finding(s) — $(date -u +%Y-%m-%d)"
+  if ! GH_TOKEN="$GITHUB_TOKEN" gh issue create --repo "$OWNER/402found" \
+      --title "$issue_title" --label "security-monitor" --body-file "$WORKDIR/report.md" \
+      2>"$WORKDIR/issueerr"; then
+    # most likely cause: the "security-monitor" label doesn't exist yet — the
+    # issue itself (i.e. the notification) matters more than the label, so
+    # retry once without it rather than silently skipping the issue entirely.
+    echo "WARN: issue create with label failed ($(cat "$WORKDIR/issueerr")); retrying without a label" >&2
+    GH_TOKEN="$GITHUB_TOKEN" gh issue create --repo "$OWNER/402found" \
+      --title "$issue_title" --body-file "$WORKDIR/report.md"
+  fi
 fi

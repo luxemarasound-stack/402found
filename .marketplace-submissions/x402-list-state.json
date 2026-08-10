@@ -12,9 +12,11 @@
       "endpoint": "/mcp",
       "category": "Data",
       "description": "Strips PII from text — SSNs, emails, API keys, phone numbers, addresses, credit cards, IPs. GDPR/HIPAA aligned. Pay-per-request via x402 (USDC on Base).",
-      "submitted": false,
-      "submission_id": null,
-      "submitted_at": null
+      "submitted": true,
+      "submission_id": "f3b25832-8bed-4c60-b350-c1b37254805a",
+      "submitted_at": "2026-08-10",
+      "probe_errors": "No valid 402 response (probe hit before min-instances=1 fix landed)",
+      "verified_live": false
     },
     {
       "slug": "token-squeezer",
@@ -135,7 +137,9 @@
       "description": "Creates tamper-evident, HMAC-signed audit log entries for agent actions, returning signed receipts for compliance. Pay-per-log via x402 (USDC on Base).",
       "submitted": true,
       "submission_id": "6ba61f37-eebf-4e8b-81e4-5a8d4dd032f5",
-      "submitted_at": "2026-07-04"
+      "submitted_at": "2026-07-04",
+      "probe_errors": null,
+      "verified_live": false
     },
     {
       "slug": "trust-verifier",

@@ -14,3 +14,7 @@ Claudecodemd.odt
 AGENTS.md
 CLAUDE.md
 *.lnk
+
+# Real credential files — never publish (repo is public)
+cdp_api_key.json
+client_secret_*.json
